@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 import { navZh, sidebarZh } from './configs/index'
 
 export default {
-  base: process.env.NODE_ENV === 'production' ? '/my-person-docs/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/my-personal-docs/' : '/',
   title: "MZ's 技术指南", // 站点标题
   description: 'MZ的技术指南, 记录学习及日常使用', // mate标签description，多用于搜索引擎抓取摘要
   lastUpdated: true,
