@@ -1,6 +1,17 @@
 export const navZh = [
   { text: "首页", link: "/" },
   { 
+    text: "AI", 
+    items: [
+      { 
+        text: "免费AI平台", 
+        items: [
+          { text: "免费可用AI工具", link: "/ai/免费可用AI工具.md" },
+        ] 
+      },
+    ]
+  },
+  { 
     text: "前端", 
     items: [
       {
@@ -13,7 +24,7 @@ export const navZh = [
       {
         text: "前端框架",
         items: [
-          { text: "Vue2/Vue3", link: "/f2e/vue/" },
+          { text: "Vue2/Vue3", link: "/f2e/vue/vue3/" },
           { text: "React", link: "/f2e/react/" },
           { text: "Svelte", link: "/f2e/svelte/" },
           { text: "Solid", link: "/f2e/solid/" },
@@ -21,7 +32,29 @@ export const navZh = [
       }
     ]
   },
-  { text: "后端", link: "/guide/test" },
+  { 
+    text: "后端",
+    items: [
+      {
+        text: "NodeJS", 
+        items: [
+          { text: "Gitee", link: "https://gitee.com/geeksdidi" }
+        ]
+      },
+      {
+        text: "Python", 
+        items: [
+          { text: "Python2/Python3", link: "https://gitee.com/geeksdidi" }
+        ]
+      },
+      {
+        text: "Golang", 
+        items: [
+          { text: "Gitee", link: "https://gitee.com/geeksdidi" }
+        ]
+      }
+    ]
+  },
   { 
     text: "云服务",
     items: [

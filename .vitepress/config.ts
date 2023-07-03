@@ -14,8 +14,7 @@ export default {
     nav: navZh,
     sidebar: sidebarZh,
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
-      { icon: "gitee", link: "https://gitee.com/geeksdidi" },
+      { icon: 'github', link: 'https://github.com/misterZhouZhou', },
     ],
     footer: {
       message: 'Released under the MIT License.',

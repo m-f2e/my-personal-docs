@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 查看文档
-      link: /markdown-examples
+      link: /
     - theme: alt
       text: View on Github
-      link: /api-examples
+      link: https://github.com/misterZhouZhou
 
 features:
   - icon: ⚡️
@@ -26,27 +26,28 @@ features:
     details: 云服务、云部署平台
 ---
 
-<h3>程序员的日常🎆</h3>
-<div class="coding">
-  <pre>
-   while (true) {
-      eat();
-      coding();
-      sleep();
-    }
-  </pre>
+<div class="codeContainer">
+  <h3>程序员的日常🎆</h3>
+  <div class="coding VPFeatures">
+    <pre>
+    while (true) {
+        eat();
+        coding();
+        sleep();
+      }
+    </pre>
+  </div>
 </div>
-
 
 <style scoped>
   h3 {
     font-size: 20px;
     font-weight: bold;
-    margin: 20px 30px;
+    margin: 20px 0;
   }
   .coding {
     border-radius: 8px;
-    margin: 16px 30px 0 30px;
+    margin: 16px 0 0 0;
     position: relative;
     background-color: var(--vp-code-block-bg);
     overflow-x: auto;
@@ -59,5 +60,20 @@ features:
     font-size: var(--vp-code-font-size);
     color: var(--vp-code-block-color);
     transition: color .5s;
+  }
+  .codeContainer {
+    padding: 0 24px;
+    max-width: 1287px;
+  }
+  @media screen and (min-width: 640px) {
+    .codeContainer {
+      padding: 0 48px;
+    }
+  }
+  @media screen and (min-width: 960px) {
+    .codeContainer {
+      padding: 0 64px;
+      margin: 0 auto;
+    }
   }
 </style>
