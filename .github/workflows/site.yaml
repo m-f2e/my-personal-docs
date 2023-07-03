@@ -1,33 +1,27 @@
-name: Deploy
+name: site
 on:
   push:
     tags:
       - v*
+
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout ⏰
+        uses: actions/checkout@v2
+      - name: install pnpm 8
+        uses: pnpm/action-setup@v2.1.0
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
+          version: 8
+      - name: Install and Builld 🔧
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm build
+      - name: Deploy 🚀
+        uses: crazy-max/ghaction-github-pages@v2
         with:
-          node-version: 16
-          cache: npm
-      - run: npm ci
-      - name: Build
-        run: npm run build
-      - uses: actions/configure-pages@v2
-      - uses: actions/upload-pages-artifact@v1
-        with:
-          path: docs/.vitepress/dist
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v1
+          target_branch: gh-pages
+          build_dir: .vitepress/dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
