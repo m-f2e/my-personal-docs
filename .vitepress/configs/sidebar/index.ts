@@ -1,4 +1,50 @@
 export const sidebarZh = {
+  '/ai/': [
+    {
+      text: 'AI工具',
+      collapsed: false,
+      items: [
+        { text: '免费可用AI工具整理', link: '/ai/免费可用AI工具.md' },
+      ]
+    },
+    {
+      text: 'AI机器学习',
+      collapsed: false,
+      items: [
+        { text: 'AI机器学习', link: '/ai/AI机器学习.md' },
+      ]
+    },
+  ],
+  '/serverless/deploy/': [
+    {
+      text: 'Vercel',
+      collapsed: false,
+      items: [
+        { text: 'Vercel简介', link: '/serverless/deploy/Vercel简介.md' },
+      ]
+    },
+    {
+      text: 'Netlify',
+      collapsed: false,
+      items: [
+        { text: 'Netlify简介', link: '/serverless/deploy/Netlify简介.md' },
+      ]
+    },
+    {
+      text: 'Replit',
+      collapsed: false,
+      items: [
+        { text: 'Replit简介', link: '/serverless/deploy/Replit简介.md' },
+      ]
+    },
+    {
+      text: 'Surge',
+      collapsed: false,
+      items: [
+        { text: 'Surge简介', link: '/serverless/deploy/Surge简介.md' },
+      ]
+    },
+  ],
   '/f2e/html/': [
     {
       text: 'HTML',
@@ -42,16 +88,21 @@ export const sidebarZh = {
       ]
     }
   ],
-  '/f2e/solid/': [
-    
-  ],
-  '/ai/': [
+  '/f2e/script/': [
     {
-      text: 'AI',
+      text: 'JavaScript',
       collapsed: false,
       items: [
-        { text: '免费可用AI工具整理', link: '/ai/可用ChatGPT整理.md' },
+        { text: '简介', link: '/f2e/script/js/index.md' },
+      ]
+    },
+    {
+      text: 'TypeScript',
+      collapsed: false,
+      items: [
+        { text: 'Deploy', link: '/f2e/script/ts/index.md' }
       ]
     }
-  ]
+  ],
+  
 }

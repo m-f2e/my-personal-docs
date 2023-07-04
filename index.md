@@ -23,7 +23,10 @@ features:
     details: 后端语言基础、框架
   - icon: 🛠️
     title: 云服务
-    details: 云服务、云部署平台
+    details: 云服务、云部署平台、docker
+  - icon: 🤖
+    title: AI
+    details: AI工具整理、AI机器学习
 ---
 
 <div class="codeContainer">

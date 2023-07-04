@@ -6,7 +6,13 @@ export const navZh = [
       { 
         text: "免费AI平台", 
         items: [
-          { text: "免费可用AI工具", link: "/ai/免费可用AI工具.md" },
+          { text: "免费可用AI工具", link: "/ai/免费可用AI工具" },
+        ] 
+      },
+      { 
+        text: "AI机器学习", 
+        items: [
+          { text: "AI机器学习", link: "/ai/AI机器学习" },
         ] 
       },
     ]
@@ -19,6 +25,7 @@ export const navZh = [
         items: [
           { text: "HTML/HTML5", link: "/f2e/html/" },
           { text: "CSS/CSS3", link: "/f2e/css/" },
+          { text: "JavaScript/TypeScript", link: "/f2e/script/js/" },
         ]
       },
       {
@@ -59,13 +66,21 @@ export const navZh = [
     text: "云服务",
     items: [
       { 
+        text: "云部署", 
+        items: [
+          { text: "Vercel", link: "/serverless/deploy/Vercel简介" },
+          { text: "Netlify", link: "/serverless/deploy/Netlify简介" },
+          { text: "Replit", link: "/serverless/deploy/Replit简介" }
+        ] 
+      },
+      { 
         text: "云函数", 
         items: [
           { text: "Gitee", link: "https://gitee.com/geeksdidi" }
         ] 
       },
       { 
-        text: "云部署", 
+        text: "Docker", 
         items: [
           { text: "Gitee", link: "https://gitee.com/geeksdidi" }
         ] 
