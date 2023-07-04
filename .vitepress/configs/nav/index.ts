@@ -87,4 +87,21 @@ export const navZh = [
       },
     ]
   },
+  { 
+    text: "提效工具",
+    items: [
+      { 
+        text: "编程软件", 
+        items: [
+          { text: "VSCode", link: "/tool/vscode/" },
+        ] 
+      },
+      { 
+        text: "效率提升", 
+        items: [
+          { text: "pnpm", link: "/tool/efficiency/" },
+        ] 
+      },
+    ]
+  },
 ]

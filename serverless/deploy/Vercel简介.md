@@ -15,7 +15,7 @@ https://vercel.com
 Vercel的优点在于其快速的部署速度和高质量的服务，尤其是对于Next.js应用程序的部署。
 
 ## 定价
-
+### 免费套餐
 - 个人｜非商业 免费
 
 ![vercel](/serverless/vercel.png)

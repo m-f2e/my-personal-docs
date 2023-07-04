@@ -15,6 +15,9 @@ hero:
       link: https://github.com/misterZhouZhou
 
 features:
+  - icon: 🤖
+    title: AI
+    details: AI工具整理、AI机器学习
   - icon: ⚡️
     title: 前端
     details: 记录前端基础及日常使用、注意事项
@@ -24,9 +27,6 @@ features:
   - icon: 🛠️
     title: 云服务
     details: 云服务、云部署平台、docker
-  - icon: 🤖
-    title: AI
-    details: AI工具整理、AI机器学习
 ---
 
 <div class="codeContainer">

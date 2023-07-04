@@ -44,6 +44,41 @@ export const sidebarZh = {
         { text: 'Surge简介', link: '/serverless/deploy/Surge简介.md' },
       ]
     },
+    {
+      text: 'Glitch',
+      collapsed: false,
+      items: [
+        { text: 'Glitch简介', link: '/serverless/deploy/Glitch简介.md' },
+      ]
+    },
+    {
+      text: 'Zeabur',
+      collapsed: false,
+      items: [
+        { text: 'Zeabur简介', link: '/serverless/deploy/Zeabur简介.md' },
+      ]
+    },
+    {
+      text: 'Render',
+      collapsed: false,
+      items: [
+        { text: 'Render简介', link: '/serverless/deploy/Render简介.md' },
+      ]
+    },
+    {
+      text: 'Railway',
+      collapsed: false,
+      items: [
+        { text: 'Railway简介', link: '/serverless/deploy/Railway简介.md' },
+      ]
+    },
+    {
+      text: 'Heroku',
+      collapsed: false,
+      items: [
+        { text: 'Heroku简介', link: '/serverless/deploy/Heroku简介.md' },
+      ]
+    },
   ],
   '/f2e/html/': [
     {
@@ -104,5 +139,23 @@ export const sidebarZh = {
       ]
     }
   ],
-  
+  '/tool/vscode/': [
+    {
+      text: 'VSCode',
+      collapsed: false,
+      items: [
+        { text: 'VSCode简介', link: '/tool/vscode/index.md' }
+      ]   
+    }
+  ],
+  '/tool/efficiency/': [
+    {
+      text: '终端工具',
+      collapsed: false,
+      items: [
+        { text: 'pnpm', link: '/tool/efficiency/pnpm简介.md' },
+        { text: 'pnpm monorepo', link: '/tool/efficiency/pnpm-monorepo.md' }
+      ]   
+    }
+  ]
 }
