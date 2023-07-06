@@ -4,7 +4,7 @@ export const sidebarZh = {
       text: 'AI工具',
       collapsed: false,
       items: [
-        { text: '免费可用AI工具整理', link: '/ai/免费可用AI工具.md' },
+        { text: '1、免费可用AI工具整理', link: '/ai/免费可用AI工具.md' },
       ]
     },
     {
@@ -120,6 +120,22 @@ export const sidebarZh = {
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'Routing', link: '/guide/routing' },
         { text: 'Deploy', link: '/guide/deploy' }
+      ]
+    }
+  ],
+  '/f2e/css/': [
+    {
+      text: 'CSS/CSS3核心内容',
+      collapsed: false,
+      items: [
+        { text: 'CSS/CSS3简介', link: '/f2e/css/index.md' },
+      ]
+    },
+    {
+      text: 'CSS/CSS3案例',
+      collapsed: false,
+      items: [
+        { text: '1、不同设备展示1px', link: '/f2e/css/1px.md' }
       ]
     }
   ],
