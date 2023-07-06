@@ -8,11 +8,11 @@ hero:
   tagline: 记录学习、总结及踩坑
   actions:
     - theme: brand
-      text: 查看文档
-      link: /
-    - theme: alt
       text: View on Github
       link: https://github.com/misterZhouZhou
+    # - theme: alt
+    #   text: View on Github
+    #   link: https://github.com/misterZhouZhou
 
 features:
   - icon: 🤖
@@ -41,6 +41,24 @@ features:
     </pre>
   </div>
 </div>
+
+<div class="codeContainer">
+  <h3>程序员的特点⭐️</h3>
+</div>
+
+:::tip 程序员都是好人
+他们整天都在思考一个问题：“我又哪里做错了，谁能告诉我啊 ^_^”
+:::
+
+:::warning 程序员的爱情观
+爱上一个人的时候，那就是常量限定，永远不会改变；女朋友就是私有变量，只有我这个类才能调用 !
+:::
+
+:::danger 程序员的笑话
+很多男孩子听到Mac觉得是电脑；
+很多女孩子听到Mac觉得是口红；
+程序员听到Mac觉得是物理地址。
+:::
 
 <style scoped>
   h3 {
@@ -72,11 +90,23 @@ features:
     .codeContainer {
       padding: 0 48px;
     }
+    .codeContainer ~ .custom-block {
+      margin: 20px 48px;
+    }
   }
   @media screen and (min-width: 960px) {
     .codeContainer {
       padding: 0 64px;
       margin: 0 auto;
+    }
+    .codeContainer ~ .custom-block {
+      margin: 20px 64px;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    .codeContainer ~ .custom-block {
+      max-width: 1164px;
+      margin: 20px auto;
     }
   }
 </style>

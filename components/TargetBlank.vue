@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <a :href="link" class="link">
+  <a :href="link" target="_blank" class="link">
     <slot></slot>
   </a>
 </template>
