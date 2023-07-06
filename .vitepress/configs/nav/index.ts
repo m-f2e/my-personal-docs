@@ -88,7 +88,7 @@ export const navZh = [
     ]
   },
   { 
-    text: "提效工具",
+    text: "软件工具",
     items: [
       { 
         text: "编程软件", 

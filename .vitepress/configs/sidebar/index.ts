@@ -144,7 +144,8 @@ export const sidebarZh = {
       text: 'VSCode',
       collapsed: false,
       items: [
-        { text: 'VSCode简介', link: '/tool/vscode/index.md' }
+        { text: 'VSCode简介', link: '/tool/vscode/index.md' },
+        { text: '常用扩展插件', link: '/tool/vscode/常用扩展插件.md' }
       ]   
     }
   ],
