@@ -36,7 +36,14 @@ export const navZh = [
           { text: "Svelte", link: "/f2e/svelte/" },
           { text: "Solid", link: "/f2e/solid/" },
         ]
-      }
+      },
+      {
+        text: "打包工具",
+        items: [
+          { text: "unbuild", link: "/f2e/bundle/unbuild打包.md" },
+          { text: "tsup", link: "/f2e/bundle/tsup打包.md" },
+        ]
+      },
     ]
   },
   { 
@@ -99,7 +106,9 @@ export const navZh = [
       { 
         text: "效率提升", 
         items: [
-          { text: "pnpm", link: "/tool/efficiency/" },
+          { text: "pnpm", link: "/tool/efficiency/pnp简介.md" },
+          { text: "nvm", link: "/tool/efficiency/nvm简介.md" },
+          { text: "nrm", link: "/tool/efficiency/nrm简介.md" },
         ] 
       },
     ]

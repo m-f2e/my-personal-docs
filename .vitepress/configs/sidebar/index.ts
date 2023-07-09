@@ -5,6 +5,7 @@ export const sidebarZh = {
       collapsed: false,
       items: [
         { text: '1、免费可用AI工具整理', link: '/ai/免费可用AI工具.md' },
+        { text: '2、其他AI整理', link: '/ai/其他整理.md' },
       ]
     },
     {
@@ -94,10 +95,10 @@ export const sidebarZh = {
       text: 'Vue3',
       collapsed: false,
       items: [
-        { text: 'Vue3基础知识', link: '/f2e/vue/vue3/index.md' },
-        { text: 'Vue3高级知识', link: '/f2e/vue/vue3/vue3高级知识.md' },
-        { text: 'Vue3+Vite', link: '/f2e/vue/vue3/vite.md' },
-        { text: 'Vue3+Vite+TSX', link: '/f2e/vue/vue3/vite-tsx.md' },
+        { text: '1、Vue3基础知识', link: '/f2e/vue/vue3/index.md' },
+        { text: '2、Vue3高级知识', link: '/f2e/vue/vue3/vue3高级知识.md' },
+        { text: '3、Vue3+Vite', link: '/f2e/vue/vue3/vite.md' },
+        { text: '4、Vue3+Vite+TSX', link: '/f2e/vue/vue3/vite-tsx.md' },
       ]
     },
     {
@@ -109,6 +110,16 @@ export const sidebarZh = {
       ]
     }
   ],
+  '/f2e/bundle': [
+    {
+      text: '打包工具',
+      collapsed: false,
+      items: [
+        { text: '1、unbuild', link: '/f2e/bundle/unbuild打包.md' },
+        { text: '2、tsup', link: '/f2e/bundle/tsup打包.md' },
+      ]
+    }
+  ],
   '/f2e/css/': [
     {
       text: 'CSS/CSS3核心内容',
@@ -117,6 +128,7 @@ export const sidebarZh = {
         { text: '1、CSS/CSS3简介', link: '/f2e/css/index.md' },
         { text: '2、选择器', link: '/f2e/css/选择器.md' },
         { text: '3、transition和animation动画', link: '/f2e/css/transition和animation动画.md' },
+        { text: '4、media媒体查询', link: '/f2e/css/media媒体查询.md' },
       ]
     },
     {
@@ -159,8 +171,10 @@ export const sidebarZh = {
       text: '终端工具',
       collapsed: false,
       items: [
-        { text: 'pnpm', link: '/tool/efficiency/pnpm简介.md' },
-        { text: 'pnpm monorepo', link: '/tool/efficiency/pnpm-monorepo.md' }
+        { text: '1、pnpm简介', link: '/tool/efficiency/pnpm简介.md' },
+        { text: '2、pnpm monorepo', link: '/tool/efficiency/pnpm-monorepo.md' },
+        { text: '3、nvm简介', link: '/tool/efficiency/nvm简介.md' },
+        { text: '4、nrm简介', link: '/tool/efficiency/nrm简介.md' },
       ]   
     }
   ]
