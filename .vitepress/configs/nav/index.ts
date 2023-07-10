@@ -73,11 +73,18 @@ export const navZh = [
     text: "云服务",
     items: [
       { 
+        text: "云计算", 
+        items: [
+          { text: "云计算简介", link: "/serverless/service/云计算简介.md" },
+          { text: "其他", link: "/serverless/service/Replit简介" }
+        ] 
+      },
+      { 
         text: "云部署", 
         items: [
           { text: "Vercel", link: "/serverless/deploy/Vercel简介" },
           { text: "Netlify", link: "/serverless/deploy/Netlify简介" },
-          { text: "Replit", link: "/serverless/deploy/Replit简介" }
+          { text: "其他", link: "/serverless/deploy/Replit简介" }
         ] 
       },
       { 

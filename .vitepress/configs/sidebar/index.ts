@@ -16,6 +16,16 @@ export const sidebarZh = {
       ]
     },
   ],
+  '/serverless/service/': [
+    {
+      text: '云计算',
+      collapsed: false,
+      items: [
+        { text: '1、云计算简介', link: '/serverless/service/云计算简介.md' },
+        { text: '2、低代码简介', link: '/serverless/service/低代码简介.md' },
+      ]
+    },
+  ],
   '/serverless/deploy/': [
     {
       text: 'Vercel',
