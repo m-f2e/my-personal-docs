@@ -25,71 +25,63 @@ export const sidebarZh = {
         { text: '2、低代码简介', link: '/serverless/service/低代码简介.md' },
       ]
     },
+    {
+      text: '云函数',
+      collapsed: false,
+      items: [
+        { text: '1、云函数简介', link: '/serverless/service/云函数简介.md' },
+      ]
+    },
+  ],
+  '/serverless/system/': [
+    {
+      text: '操作系统',
+      collapsed: false,
+      items: [
+        { text: '1、Linux简介', link: '/serverless/system/linux简介.md' },
+      ]
+    },
+    {
+      text: '服务器',
+      collapsed: false,
+      items: [
+        { text: '1、Nginx简介', link: '/serverless/system/nginx简介.md' },
+        { text: '2、Nginx配置.md', link: '/serverless/system/nginx配置.md' },
+      ]
+    },
+  ],
+  '/serverless/docker/': [
+    {
+      text: 'Docker',
+      collapsed: false,
+      items: [
+        { text: '1、Docker简介', link: '/serverless/docker/index.md' },
+      ]
+    },
   ],
   '/serverless/deploy/': [
     {
-      text: 'Vercel',
+      text: '三方部署平台',
       collapsed: false,
       items: [
-        { text: 'Vercel简介', link: '/serverless/deploy/Vercel简介.md' },
+        { text: '1、Vercel简介', link: '/serverless/deploy/Vercel简介.md' },
+        { text: '2、Netlify简介', link: '/serverless/deploy/Netlify简介.md' },
+        { text: '3、Replit简介', link: '/serverless/deploy/Replit简介.md' },
+        { text: '4、Surge简介', link: '/serverless/deploy/Surge简介.md' },
+        { text: '5、Glitch简介', link: '/serverless/deploy/Glitch简介.md' },
+        { text: '6、Zeabur简介', link: '/serverless/deploy/Zeabur简介.md' },
+        { text: '7、Render简介', link: '/serverless/deploy/Render简介.md' },
+        { text: '8、Railway简介', link: '/serverless/deploy/Railway简介.md' },
+        { text: '9、Heroku简介', link: '/serverless/deploy/Heroku简介.md' },
       ]
     },
     {
-      text: 'Netlify',
+      text: 'CDN & DNS',
       collapsed: false,
       items: [
-        { text: 'Netlify简介', link: '/serverless/deploy/Netlify简介.md' },
+        { text: '1、Cloudflare简介', link: '/serverless/deploy/cloudflare简介.md' },
       ]
-    },
-    {
-      text: 'Replit',
-      collapsed: false,
-      items: [
-        { text: 'Replit简介', link: '/serverless/deploy/Replit简介.md' },
-      ]
-    },
-    {
-      text: 'Surge',
-      collapsed: false,
-      items: [
-        { text: 'Surge简介', link: '/serverless/deploy/Surge简介.md' },
-      ]
-    },
-    {
-      text: 'Glitch',
-      collapsed: false,
-      items: [
-        { text: 'Glitch简介', link: '/serverless/deploy/Glitch简介.md' },
-      ]
-    },
-    {
-      text: 'Zeabur',
-      collapsed: false,
-      items: [
-        { text: 'Zeabur简介', link: '/serverless/deploy/Zeabur简介.md' },
-      ]
-    },
-    {
-      text: 'Render',
-      collapsed: false,
-      items: [
-        { text: 'Render简介', link: '/serverless/deploy/Render简介.md' },
-      ]
-    },
-    {
-      text: 'Railway',
-      collapsed: false,
-      items: [
-        { text: 'Railway简介', link: '/serverless/deploy/Railway简介.md' },
-      ]
-    },
-    {
-      text: 'Heroku',
-      collapsed: false,
-      items: [
-        { text: 'Heroku简介', link: '/serverless/deploy/Heroku简介.md' },
-      ]
-    },
+    }
   ],
   '/f2e/html/': [
     {

@@ -75,28 +75,29 @@ export const navZh = [
       { 
         text: "云计算", 
         items: [
-          { text: "云计算简介", link: "/serverless/service/云计算简介.md" },
-          { text: "其他", link: "/serverless/service/Replit简介" }
+          { text: "云计算简介", link: "/serverless/service/云计算简介" },
+          { text: "其他", link: "/serverless/service/云函数简介" }
         ] 
       },
       { 
         text: "云部署", 
         items: [
           { text: "Vercel", link: "/serverless/deploy/Vercel简介" },
-          { text: "Netlify", link: "/serverless/deploy/Netlify简介" },
+          { text: "Cloudflare", link: "/serverless/deploy/cloudflare简介" },
           { text: "其他", link: "/serverless/deploy/Replit简介" }
         ] 
       },
       { 
-        text: "云函数", 
+        text: "操作系统 | 服务器", 
         items: [
-          { text: "Gitee", link: "https://gitee.com/geeksdidi" }
+          { text: "Linux", link: "/serverless/system/linux简介" },
+          { text: "Nginx", link: "/serverless/system/nginx简介" },
         ] 
       },
       { 
-        text: "Docker", 
+        text: "Docker容器", 
         items: [
-          { text: "Gitee", link: "https://gitee.com/geeksdidi" }
+          { text: "Docker", link: "/serverless/docker/" }
         ] 
       },
     ]
