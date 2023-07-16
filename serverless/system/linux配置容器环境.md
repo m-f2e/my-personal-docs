@@ -14,7 +14,7 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 curl -sSL https://get.daocloud.io/docker | sh
 
 或者
-wget -qO- get.docker.com | sh
+wget -qO- get.docker.com | bash
 ```
 
 ### 1.2、手动安装
