@@ -68,3 +68,50 @@ Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的�
 - 值得提出的是`/bin、/usr/bin`是给系统用户使用的指令（除 root 外的通用用户），而`/sbin, /usr/sbin` 则是给 `root` 使用的指令。
 - `/var`： 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 `/var/log` 目录下，另外 mail 的预设放置也是在这里
 :::
+
+## 3、yum
+
+### 3.1、简介
+`Yum`（Yet Another Setup Tool）是一款基于`RPM`包管理系统的`软件包管理工具`，主要用于在`Linux`操作系统上安装、升级和删除软件包。
+
+### 3.2、yum使用
+
+#### 3.2.1、升级软件包
+升级软件包：使用`yum update`命令可以更新所有已安装软件包的最新版本。
+```shell
+yum update
+```
+
+#### 3.2.2、安装软件
+:::tip 
+安装软件：使用`yum install`命令可以安装软件包。
+::: 
+
+安装nginx
+```shell
+yum install nginx
+```
+
+#### 3.2.3、搜索软件包
+:::tip
+搜索软件包：可以使用yum search命令来搜索特定的软件包
+:::
+```shell
+yum search python
+```
+
+#### 3.2.4、删除软件包
+:::tip
+删除软件包：使用`yum remove`命令可以删除软件包。
+:::
+```shell
+yum remove python
+```
+
+#### 3.2.5、清理缓存
+:::tip
+在使用Yum进行软件包操作后，系统会缓存下载的软件包文件。您可以使用`yum clean`命令清理这些缓存文件
+:::
+```shell
+yum clean all
+```

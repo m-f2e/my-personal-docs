@@ -39,6 +39,7 @@ export const sidebarZh = {
       collapsed: false,
       items: [
         { text: '1、Linux简介', link: '/serverless/system/linux简介.md' },
+        { text: '2、Linux配置容器环境', link: '/serverless/system/linux配置容器环境.md' },
       ]
     },
     {
