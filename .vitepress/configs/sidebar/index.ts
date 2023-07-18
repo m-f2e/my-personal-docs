@@ -39,7 +39,7 @@ export const sidebarZh = {
       collapsed: false,
       items: [
         { text: '1、Linux简介', link: '/serverless/system/linux简介.md' },
-        { text: '2、Linux配置容器环境', link: '/serverless/system/linux配置容器环境.md' },
+        { text: '2、Linux配置Docker环境', link: '/serverless/system/linux配置docker环境.md' },
       ]
     },
     {
@@ -50,13 +50,11 @@ export const sidebarZh = {
         { text: '2、Nginx配置.md', link: '/serverless/system/nginx配置.md' },
       ]
     },
-  ],
-  '/serverless/docker/': [
     {
       text: 'Docker',
       collapsed: false,
       items: [
-        { text: '1、Docker简介', link: '/serverless/docker/index.md' },
+        { text: '1、Docker简介', link: '/serverless/system/docker简介.md' },
       ]
     },
   ],

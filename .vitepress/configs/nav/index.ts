@@ -88,16 +88,10 @@ export const navZh = [
         ] 
       },
       { 
-        text: "操作系统 | 服务器", 
+        text: "操作系统|服务器|容器", 
         items: [
           { text: "Linux", link: "/serverless/system/linux简介" },
           { text: "Nginx", link: "/serverless/system/nginx简介" },
-        ] 
-      },
-      { 
-        text: "Docker容器", 
-        items: [
-          { text: "Docker", link: "/serverless/docker/" }
         ] 
       },
     ]

@@ -115,3 +115,35 @@ yum remove python
 ```shell
 yum clean all
 ```
+
+## 4、wget
+### 4.1、简介
+`wget`是一个自由的网络下载工具，可以用来下载网络上的资源。
+:::tip
+使用`wget`下载文件的基本语法是：wget [参数列表] URL。
+:::
+
+### 4.2、下载整个http或者ftp站点、
+```shell
+wget -r index.html
+```
+
+### 4.3、下载文件并重命名
+```shell
+wget http://www.lxlinux.net --output-document newfile.html
+或者
+wget http://www.lxlinux.net -O newfile.html
+```
+
+### 4.4、断点续传
+:::tip
+适用于要下载的文件非常大，因为网络的原因有可能出现一次性无法下载完全的情况。
+```shell
+wget --continue https://www.lxlinux.net/linux-distro.iso
+或者
+wget -c https://www.lxlinux.net/linux-distro.iso
+```
+### 4.5、后台下载
+```shell
+wget -b https://www.lxlinux.net/linux-distro.iso
+```
