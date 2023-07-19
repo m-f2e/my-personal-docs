@@ -40,6 +40,7 @@ export const sidebarZh = {
       items: [
         { text: '1、Linux简介', link: '/serverless/system/linux简介.md' },
         { text: '2、Linux配置Docker环境', link: '/serverless/system/linux配置docker环境.md' },
+        { text: '3、Woiden免费VPS服务器', link: '/serverless/system/woiden免费vps.md' },
       ]
     },
     {
