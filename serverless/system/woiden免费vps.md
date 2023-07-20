@@ -62,3 +62,58 @@ yum install -y wget && wget -O install.sh https://download.bt.cn/install/install
 
 ![woiden-bt](/system/woiden-bt.jpg)
 
+## 7、cloudflare给IPv6 VPS提供IPv4端口转发
+:::tip
+ipv6地址的访问需要访问的网络支持ipv6才，对于不支持ipv6的网络，可以使用cloudflare提供的ipv4端口转发
+:::
+
+cloudflare支持的端口
+```shell
+HTTP ports supported by Cloudflare:
+80
+8080
+8880
+2052
+2082
+2086
+2095
+HTTPS ports supported by Cloudflare:
+443
+2053
+2083
+2087
+2096
+8443
+```
+### 7.1、vps宝塔安装成功后，通过ipv6->ipv4创建映射，登录宝塔面板
+![woiden-bt-ipv6](/system/woiden-bt-ip.jpg)
+
+### 7.2、通过`94.23.116.185:配置的ipv4端口`访问
+:::tip
+替换宝塔提供的访问ip
+:::
+如：
+```shell
+http://94.23.116.185:3334/4462c10f1
+```
+
+### 7.3、在宝塔面板修改访问端口
+:::tip
+  【面板设置】-> 【安全设置】
+:::
+![woiden-bt-port](/system/woiden-bt-port.jpg)
+
+修改成功后，即可通过 https://域名:8443 的方式在`IPv4`条件下访问宝塔面板了.
+
+### 7.4、在cloudflare 域名控制面板中，添加AAAA解析，例如：`vps.xx.com`解析到vps的IPv6上。
+:::tip
+【你绑定的域名】->【DNS】->【记录】
+:::
+![woiden-cloudflare](/system/woiden-cloudflare.jpg)
+
+### 7.5、在宝塔模板中开启【监听IPv6】功能的前提下，开启【面板SSL】，选择使用自签名证书
+![woiden-bt-ipv6](/system/woiden-bt-ipv6.jpg)
+
+![woiden-bt-ssl](/system/woiden-bt-ssl.jpg)
+
+修改成功后，即可通过 https://vps.xx.com:8443 来访问了。
