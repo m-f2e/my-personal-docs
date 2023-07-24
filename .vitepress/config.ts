@@ -1,8 +1,14 @@
 
 import { defineConfig } from 'vitepress'
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { navZh, sidebarZh } from './configs/index'
 
 export default defineConfig({
+  vite: {
+    plugins: [
+      vueJsx() as Plugin,
+    ],
+  },
   base: '/',
   // base: process.env.NODE_ENV === 'production' ? '/my-personal-docs/' : '/',
   title: "MZ's 技术指南", // 站点标题

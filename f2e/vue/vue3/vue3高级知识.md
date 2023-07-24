@@ -1,10 +1,49 @@
 # Vue3高级知识
 
-## 1、插槽Slot
+## 1、ref
+:::tip
+在Vue中，`ref`是一个用于`创建响应式数据`的函数。它接收一个参数，即需要创建引用的值，并返回一个响应式对象。
+:::
+### 1.1、锚点
+```vue
+<div ref="ref1"></div>
+
+<script setup>
+import { ref } from 'vue'
+const ref1 = ref()
+</script>
+```
+
+### 1.2、自定义ref
+```vue
+import { customRef } from 'vue'
+function MyRef<T>(value: T) {
+  return customRef((track, trigger) => {
+    return {
+      get() {
+        // 追踪value
+        track();
+        return value;
+      },
+      set(newValue: T) {
+        value = newValue;
+        // 触发更新
+        trigger();
+      }
+    }
+  });
+}
+```
+使用
+```vue
+let keyWord = MyRef<string>("1111");
+```
+
+## 2、插槽Slot
 :::tip
 插槽（Slot）是一种用于在`父组件中插入子组件内容`的机制。通过插槽，您可以定义一些占位符，在父组件中填充具体的内容，以实现动态组件的复用和定制
 :::
-### 1.1、默认插槽
+### 2.1、默认插槽
 父组件
 ```js 
 <template>
@@ -23,7 +62,7 @@
 </template>
 ```
 
-### 1.2、具名插槽
+### 2.2、具名插槽
 父组件
 ```js
 <ChildComponent>
@@ -47,7 +86,7 @@
 </template>
 ```
 
-### 1.3、作用域插槽
+### 2.3、作用域插槽
 父组件
 ```js
 <ChildComponent>
@@ -69,3 +108,5 @@
   </div>
 </template>
 ```
+
+## 3、
