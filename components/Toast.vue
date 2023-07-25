@@ -3,7 +3,7 @@
     <Transition name="modal">
       <div v-show="showModal" class="modal-mask">
         <div class="modal-container">
-          <p class="modal-title">{{ props.message }}</p>
+          <p class="modal-title">{{ message }}</p>
         </div>
       </div>
     </Transition>
@@ -35,6 +35,14 @@ watch(() => props.modelValue, (newVal) => {
     showModal.value = false
     emit('update:modelValue', false)
   }, 2000)
+})
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Toast',
 })
 </script>
 

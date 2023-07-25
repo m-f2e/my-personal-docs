@@ -1,25 +1,7 @@
 import { ref, defineComponent } from 'vue'
-// import type { Ref } from 'vue'
-
-// export default ()=> {
-//   const countRef = ref(111)
-//   return (
-//     <input v-model={countRef.value} />
-//   )
-// }
-
-// export default defineComponent({
-//   name: 'TsxComponent',
-//   setup() {
-//     const countRef = ref(111)
-//     return () => (
-//       <input v-model={countRef.value} />
-//     )
-//   }
-// })
 
 export default defineComponent({
-  name: 'TsxComponent',
+  name: 'TsxInput',
   props: {
     modelValue: String
   },

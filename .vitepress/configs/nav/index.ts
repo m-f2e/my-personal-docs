@@ -31,7 +31,7 @@ export const navZh = [
       {
         text: "前端框架",
         items: [
-          { text: "Vue2/Vue3", link: "/f2e/vue/vue3/" },
+          { text: "Vue2/Vue3", link: "/f2e/vue/vue3/vue3基础知识.md" },
           { text: "React", link: "/f2e/react/" },
           { text: "Svelte", link: "/f2e/svelte/" },
           { text: "Solid", link: "/f2e/solid/" },

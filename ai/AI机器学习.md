@@ -1,9 +1,6 @@
 # AI机器学习.md
 
-<ModalDemo />
-
 <script setup>
-import ModalDemo from '../components/ModalDemo.vue'
 </script>
 
 <style>

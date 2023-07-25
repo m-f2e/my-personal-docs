@@ -97,7 +97,7 @@ export const sidebarZh = {
       text: 'Vue3',
       collapsed: false,
       items: [
-        { text: '1、Vue3基础知识', link: '/f2e/vue/vue3/index.md' },
+        { text: '1、Vue3基础知识', link: '/f2e/vue/vue3/vue3基础知识.md' },
         { text: '2、Vue3高级知识', link: '/f2e/vue/vue3/vue3高级知识.md' },
         { text: '3、Vue3+Vite', link: '/f2e/vue/vue3/vite.md' },
         { text: '4、Vue3+Vite+TSX', link: '/f2e/vue/vue3/vite-tsx.md' },

@@ -1,3 +1,9 @@
+<template>
+  <a :href="link" target="_blank" class="link">
+    <slot></slot>
+  </a>
+</template>
+
 <script setup lang="ts">
   defineProps({
     link: {
@@ -7,11 +13,14 @@
   })
 </script>
 
-<template>
-  <a :href="link" target="_blank" class="link">
-    <slot></slot>
-  </a>
-</template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'TargetBlank',
+})
+</script>
+
 
 <style scoped>
 .link {
