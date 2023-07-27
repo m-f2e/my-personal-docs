@@ -495,9 +495,6 @@ export default defineComponent({
 }
 ```
 
-示例：
-
-
 <script setup>
 import { ref } from 'vue'
 import TsxInput from '../../../components/tsxComponent/input.tsx'

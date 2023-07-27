@@ -1,7 +1,8 @@
 export const navZh = [
   { text: "首页", link: "/" },
   { 
-    text: "AI", 
+    text: "AI",
+    activeMatch: '/ai/',
     items: [
       { 
         text: "免费AI平台", 
@@ -17,8 +18,27 @@ export const navZh = [
       },
     ]
   },
+  {
+    text: "移动端",
+    activeMatch: '/phone/',
+    items: [
+      {
+        text: "Objective-C/C++",
+        items: [
+          { text: "Objective-C", link: "/phone/oc/" },
+        ]
+      },
+      {
+        text: "Swift",
+        items: [
+          { text: "Swift", link: "/phone/swift/" },
+        ]
+      }
+    ]
+  },
   { 
     text: "前端", 
+    activeMatch: '/f2e/',
     items: [
       {
         text: "前端基础",
@@ -71,6 +91,7 @@ export const navZh = [
   },
   { 
     text: "云服务",
+    activeMatch: '/serverless/',
     items: [
       { 
         text: "云计算", 
@@ -98,6 +119,7 @@ export const navZh = [
   },
   { 
     text: "软件工具",
+    activeMatch: '/tool/',
     items: [
       { 
         text: "编程软件", 

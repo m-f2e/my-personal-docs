@@ -16,6 +16,23 @@ export const sidebarZh = {
       ]
     },
   ],
+  '/phone/': [
+    {
+      text: '移动端/Objective-C',
+      collapsed: false,
+      items: [
+        { text: 'Objective-C/C++', link: '/phone/oc/' },
+        { text: 'WKWebView简介', link: '/phone/oc/wkwebview.md' },
+      ]
+    },
+    {
+      text: '移动端/Swift',
+      collapsed: false,
+      items: [
+        { text: 'Swift', link: '/phone/swift/' },
+      ]
+    }
+  ],
   '/serverless/service/': [
     {
       text: '云计算',
@@ -89,6 +106,7 @@ export const sidebarZh = {
       collapsed: false,
       items: [
         { text: 'HTML/HTML5简介', link: '/f2e/html/index.md' },
+        { text: 'Canvas简介', link: '/f2e/html/canvas简介.md' },
       ]
     },
   ],
