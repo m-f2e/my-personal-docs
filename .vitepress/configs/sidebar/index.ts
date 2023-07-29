@@ -12,7 +12,7 @@ export const sidebarZh = {
       text: 'AI机器学习',
       collapsed: false,
       items: [
-        { text: 'AI机器学习', link: '/ai/AI机器学习.md' },
+        { text: '1、AI机器学习', link: '/ai/AI机器学习.md' },
       ]
     },
   ],
@@ -21,8 +21,8 @@ export const sidebarZh = {
       text: '移动端/Objective-C',
       collapsed: false,
       items: [
-        { text: 'Objective-C/C++', link: '/phone/oc/' },
-        { text: 'WKWebView简介', link: '/phone/oc/wkwebview.md' },
+        { text: '1、Objective-C/C++', link: '/phone/oc/' },
+        { text: '2、WKWebView简介', link: '/phone/oc/wkwebview.md' },
       ]
     },
     {
@@ -105,8 +105,8 @@ export const sidebarZh = {
       text: 'HTML/HTML5',
       collapsed: false,
       items: [
-        { text: 'HTML/HTML5简介', link: '/f2e/html/index.md' },
-        { text: 'Canvas简介', link: '/f2e/html/canvas简介.md' },
+        { text: '1、HTML/HTML5简介', link: '/f2e/html/index.md' },
+        { text: '2、Canvas简介', link: '/f2e/html/canvas简介.md' },
       ]
     },
   ],
@@ -125,8 +125,8 @@ export const sidebarZh = {
       text: 'Vue2',
       collapsed: false,
       items: [
-        { text: 'Vue2基础知识', link: '/f2e/vue/vue2/index.md' },
-        { text: 'Vue2高级知识', link: '/f2e/vue/vue2/vue2高级知识.md' },
+        { text: '1、Vue2基础知识', link: '/f2e/vue/vue2/vue2基础知识.md' },
+        { text: '2、Vue2高级知识', link: '/f2e/vue/vue2/vue2高级知识.md' },
       ]
     }
   ],

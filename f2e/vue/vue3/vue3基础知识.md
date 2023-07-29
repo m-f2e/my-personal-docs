@@ -7,7 +7,20 @@ https://vuejs.org/
 
 https://www.vue3js.cn/
 
-## 全局API变更
-:::tip
+## 3、Vue3新特性
 
-:::
+## 3.1、生命周期
+### 3.2、watchEffect
+
+### 3.3、watch
+
+### 3.4、ref
+
+### 3.5、computed
+
+
+### 3.6、reactive
+
+### 3.7、toRefs
+
+### 3.8、nextTick
