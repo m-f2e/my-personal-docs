@@ -128,6 +128,13 @@ export const sidebarZh = {
         { text: '1、Vue2基础知识', link: '/f2e/vue/vue2/vue2基础知识.md' },
         { text: '2、Vue2高级知识', link: '/f2e/vue/vue2/vue2高级知识.md' },
       ]
+    },
+    {
+      text: 'Petite-Vue',
+      collapsed: false,
+      items: [
+        { text: '1、Petite-Vue简介', link: '/f2e/vue/petite-vue/简介.md' },
+      ]
     }
   ],
   '/f2e/bundle': [
