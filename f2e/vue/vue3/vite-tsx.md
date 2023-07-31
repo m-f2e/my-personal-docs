@@ -81,6 +81,9 @@ export default ()=> {
   <div :style="{ display: 'inline-block', backgroundColor: 'skyblue', padding: '10px 20px', borderRadius: '5px' }" @click="clickShow=!clickShow">点我试试</div>
 </TsxContainer>
 
+### 3.4、事件
+<RenderX :count="1" />
+
 ## 4、选项式api+jsx
 :::tip
 - 选项式API: 选项式API 是一种 声明式的API,通过在Vue实例的选项中声明属性和方法来控制组件的行为。它提供了一种简单、易于学习和使用的方式来编写Vue组件。
@@ -499,6 +502,7 @@ export default defineComponent({
 import { ref } from 'vue'
 import TsxInput from '../../../components/tsxComponent/input.tsx'
 import MulTsxInput from '../../../components/tsxComponent/mulInput.tsx'
+import RenderX from '../../../components/tsxComponent/renderx.tsx'
 
 // 点击事件展示
 const clickShow = ref(false)

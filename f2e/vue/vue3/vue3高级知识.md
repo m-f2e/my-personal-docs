@@ -1,6 +1,4 @@
 # Vue3高级知识
-
-
 ## 1、API变更
 :::tip
 Vue3 的全局 API 已经发生了变化。
@@ -424,7 +422,6 @@ const MyComponent2 = {
 ```
 示例：
 <MyComponent2 />
-
 #### 4.1.2、事件处理
 ```vue
 <script>
@@ -486,17 +483,288 @@ const MyComponent3 = {
 </MyComponent3>
 
 ### 4.2、函数组件
+#### 4.2.1、组件渲染
+```vue
+<script>
+import { h } from 'vue'
+function Heading(props, { attrs,slots }) {
+  return h(`h${props.level}`, attrs, slots)
+}
+// Heading.props = ['level']
+Heading.props = {
+  level: {
+    type: String,
+    default: '1'
+  }
+}
+export default Heading
+</script>
+```
+```vue
+<FunctionComponent level="1">你好</FunctionComponent>
+<FunctionComponent level="2">你好</FunctionComponent>
+<FunctionComponent level="3">你好</FunctionComponent>
+<FunctionComponent level="4">你好</FunctionComponent>
+<FunctionComponent level="5">你好</FunctionComponent>
+```
 
+示例：
+<FunctionComponent level="1">你好</FunctionComponent>
+<FunctionComponent level="2">你好</FunctionComponent>
+<FunctionComponent level="3">你好</FunctionComponent>
+<FunctionComponent level="4">你好</FunctionComponent>
+<FunctionComponent level="5">你好</FunctionComponent>
+
+#### 4.2.2、事件处理
+```vue
+<script>
+import { h } from 'vue'
+function Heading(props, { attrs,slots }) {
+  return h(`h${props.level}`, {
+    ...attrs,
+    onClick: () => {
+      console.log('click')
+    }
+  }, slots)
+}
+// Heading.props = ['level']
+Heading.props = {
+  level: {
+    type: String,
+    default: '1'
+  }
+}
+export default Heading
+</script>
+
+```
+示例：
+<FunctionComponent :style="{ color: 'red'}" level="1">你好</FunctionComponent>
 ### 4.3、组件白名单
+:::tip
+Vue3中检测自定义元素发生在模版编译时，如果添加一些自定义元素或者忽略警告需要配置`isCustomElement`选项
+:::
+#### 4.3.1 vue-cli
+```js
+rules: [
+  {
+    test: /\.vue$/,
+    use: 'vue-loader',
+    options: {
+      compilerOptions: {
+        isCustomElement: tag => tag === 'my-component',
+      }
+    }
+  }
+]
+````
 
+#### 4.3.2 vite
+:::tip
+在vite项目中配置`vueCompilerOptions`选项
+:::
+修改`vite.config.js`
+```js
+module.exports = {
+  vueCompilerOptions: {
+    isCustomElement: tag => tag === 'my-component',
+  }
+}
+```
+
+### 4.4、异步组件
+#### 4.4.1、定义一个异步组件
+```vue
+import { defineAsyncComponent } from 'vue'
+
+const asyncPage = defineAsyncComponent(() => import('./async.vue'))
+```
+
+#### 4.4.2、带配置的异步组件
+```vue
+import ErrorComponent from './ErrorComponent.vue'
+import LoadingComponent from './LoadingComponent.vue'
+
+const asyncPageWithOptions = defineAsyncComponent({
+  loader: () => import('./async.vue'),
+  delay: 100,
+  timeout: 200,
+  errorComponent: ErrorComponent,
+  loadingComponent: LoadingComponent
+})
+```
 ## 5、示例
 
 ### 5.1、自定义渲染器
+:::tip
+Vue3中支持自定义渲染器，可以自定义组件的渲染
+:::
+该例子是将数据渲染到canvas上
+```html
+// index.html
+<body>
+  <div id="demo" />
+</body>
+```
+```vue
+// CanvasApp.vue
+<template>
+  <piechart @click="handleClick" :data="state.data" :x="200" :y="200" :r="200"></piechart>
+</template>
 
+<script>
+import { reactive } from 'vue'
+
+export default {
+  name: 'CanvasApp',
+  setup() {
+    const state = reactive({
+      data: [
+        { name: '大专', count: 200, color: 'brown' },
+        { name: '本科', count: 100, color: 'blue' },
+        { name: '硕士', count: 50, color: 'green' },
+        { name: '博士', count: 30, color: 'red' }
+      ]
+    })
+    const handleClick = () => {
+      state.data.push({
+        name: '高中', count: 30, color: 'orange'
+      })
+    }
+    return {
+      state,
+      handleClick
+    }
+  }
+}
+</script>
+```
+```js
+// main.js
+import { createApp, createRenderer } from 'vue'
+
+const nodeOps = {
+  // 处理元素创建
+  createElement(tag, data, children) {
+    return {tag}
+  },
+  // 处理元素插入
+  insert(child, parent, anchor) {
+    // 1、如果是子元素，不是真实dom,只需将子元素插入到父元素中
+    child.parent = parent
+    if (!parent.childs) {
+      parent.childs = [child]
+    } else {
+      parent.childs.push(child)
+    }
+    // 2、如果是真实dom，需要进行绘制
+    if (parent.nodeType === 1) {
+      draw(child)
+      // 事件处理
+      if (child.onClick) {
+        canvas.addEventListener('click', () => {
+          child.onClick()
+          setTimeout(() => {
+            draw(child)
+          }, 0)
+        })
+      }
+    }
+    return
+  },
+  remove(el) {},
+  createText(text) {},
+  setText(el, text) {},
+  setElementText(el, text) {},
+  parentNode(el) {},
+  nextSibling(el) {},
+  querySelector(el, selector) {},
+  setCopeIn(el, text) {},
+  cloneNode(el) {},
+  insertStateContent(el, text) {},
+  // 属性更新
+  patchProps(el, key, preValue, nextValue) {
+    el[key] = nextValue
+  },
+}
+
+// 绘制
+const draw = (el, noClear) => {
+  if (!noClear) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+  }
+  if (el.tag === 'piechart') {
+    let { data, x, y, r } = el;
+    let total = data.reduce((a, b) => a + b, 0);
+    let start = 0,
+        end = 0
+    data.forEach((item, index) => {
+      end += item.count / total * 360
+      drawPieChart(start, end, item.color, x, y, r)
+      drawPieChartText(item.name, (start + end)/2, x, y, r)
+      start = end
+    })
+  }
+  el.childs && el.childs.forEach(child => {
+    draw(child, true)
+  })
+}
+
+const d2a = (n) => {
+  return n * Math.PI / 180
+}
+
+const drawPieChart = (start, end, color, cx, cy, r) => {
+  let x = cx + Math.cos(d2a(start)) * r
+  let y = cy + Math.sin(d2a(start)) * r
+  ctx.beginPath()
+  ctx.moveTo(cx, cy)
+  ctx.lineTo(x, y)
+  ctx.arc(cx, cy, r, d2a(start), d2a(end), false)
+  ctx.fillStyle = color
+  ctx.fill()
+  ctx.stroke()
+  ctx.closePath()
+}
+
+const drawPieChartText = (text, position, cx, cy, r) => {
+  ctx.beginPath()
+  let x = cx + Math.cos(d2a(position)) * r/1.25 - 20
+  let y = cy + Math.sin(d2a(position)) * r/1.25
+  ctx.fillstyle = '#000'
+
+  ctx.font = '20px 微软雅黑'
+  ctx.fillText(text, x, y)
+  ctx.closePath()
+}
+
+const renderer = createRenderer(nodeOps)
+let ctx, canvas;
+
+function createCanvasApp(App) {
+  const app = renderer.createApp(App)
+  const mount = app.mount
+  app.mount = function (selector) {
+    // 创建canvas并插入画布
+    canvas = document.createElement('canvas')
+    ctx = canvas.getContext('2d')
+    // 设置画布的宽高
+    canvas.width = 600
+    canvas.height = 600
+    document.querySelector(selector).appendChild(canvas)
+    // 执行挂载
+    mount(canvas)
+  }
+  return app
+}
+
+createCanvasApp(CanvasApp).mount('#demo')
+```
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
+import { ref, h, createRenderer, onMounted } from 'vue'
 import MyComponent from '../../../components/tsxComponent/render.vue'
+import FunctionComponent from '../../../components/tsxComponent/function.vue'
 
 const MyComponent2 = {
   render() {
@@ -543,4 +811,5 @@ const filters = (txt) => {
 const enterAction = () => {
   alert('keyup.enter')
 }
+
 </script>
