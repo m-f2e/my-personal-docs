@@ -62,17 +62,20 @@ export const navZh = [
         items: [
           { text: "unbuild", link: "/f2e/bundle/unbuild打包.md" },
           { text: "tsup", link: "/f2e/bundle/tsup打包.md" },
+          { text: "Vite", link: "/f2e/bundle/vite简介.md" },
         ]
       },
     ]
   },
   { 
     text: "后端",
+    activeMatch: '/backend/',
     items: [
       {
         text: "NodeJS", 
         items: [
-          { text: "Gitee", link: "https://gitee.com/geeksdidi" }
+          { text: "NodeJS", link: "/backend/nodejs/nodejs简介.md" },
+          { text: "NuxtJS", link: "/backend/nuxtjs/nuxtjs简介.md" }
         ]
       },
       {

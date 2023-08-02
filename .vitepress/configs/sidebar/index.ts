@@ -144,6 +144,16 @@ export const sidebarZh = {
       items: [
         { text: '1、unbuild', link: '/f2e/bundle/unbuild打包.md' },
         { text: '2、tsup', link: '/f2e/bundle/tsup打包.md' },
+        { text: '3、rollup', link: '/f2e/bundle/rollup打包.md' },
+      ]
+    },
+    {
+      text: 'Vite',
+      collapsed: false,
+      items: [
+        { text: '1、Vite简介', link: '/f2e/bundle/vite简介.md' },
+        { text: '2、Vite Plugin简介', link: '/f2e/bundle/vite-plugin简介.md' },
+        { text: '3、Vite-Plugin-Mock简介', link: '/f2e/bundle/vite-plugin-mock.md' },
       ]
     }
   ],
@@ -203,6 +213,25 @@ export const sidebarZh = {
         { text: '3、nvm简介', link: '/tool/efficiency/nvm简介.md' },
         { text: '4、nrm简介', link: '/tool/efficiency/nrm简介.md' },
       ]   
+    }
+  ],
+  '/backend/nodejs/': [
+    {
+      text: 'NodeJS',
+      collapsed: false,
+      items: [
+        { text: '1、NodeJS简介', link: '/backend/nodejs/nodejs简介.md' },
+        { text: '2、Node + TS简介', link: '/backend/nodejs/nodejs+ts.md' },
+      ]
+    }
+  ],
+  '/backend/nuxtjs/': [
+    {
+      text: 'NuxtJS',
+      collapsed: false,
+      items: [
+        { text: '1、NuxtJS简介', link: '/backend/nuxtjs/nuxtjs简介.md' },
+      ]
     }
   ]
 }
