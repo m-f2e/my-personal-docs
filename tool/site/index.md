@@ -85,7 +85,7 @@ const sites = [
       margin: 20px 10px;
       padding: 16px;
       display: flex;
-      min-width: 200px;
+      width: 200px;
       border: 1px solid lightgray;
       img {
         width: 35px;
@@ -96,11 +96,18 @@ const sites = [
         margin: 0;
         color: #8c8c8c;
         font-size: 13px;
+        display:-webkit-box;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 18px;
+        -webkit-line-clamp:2;	//元素几行显示
+        -webkit-box-orient:vertical;
       }
       .item-title {
         color: #3b2c28;
         font-size: 15px;
         font-weight: 600;
+        margin-bottom: 10px;
       }
     }
   }
