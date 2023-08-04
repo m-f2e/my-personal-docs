@@ -125,6 +125,12 @@ export const navZh = [
     activeMatch: '/tool/',
     items: [
       { 
+        text: "网站导航", 
+        items: [
+          { text: "网站导航", link: "/tool/site/" },
+        ] 
+      },
+      { 
         text: "编程软件", 
         items: [
           { text: "VSCode", link: "/tool/vscode/" },
