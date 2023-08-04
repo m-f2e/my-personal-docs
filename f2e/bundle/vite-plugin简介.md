@@ -58,9 +58,9 @@ https://vitejs.cn/vite3-cn/guide/api-plugin.html
   2. `vite-plugin-react-`前缀作为`React`插件
   3. `vite-plugin-svelte-`前缀作为`Svelte`插件
 
-### 5.1、hook类型
+### 5.2、hook类型
 
-#### 5.1.1、一次性钩子
+#### 5.2.1、一次性钩子
 :::tip
 在服务器启动或者关闭时只调用一次
 :::
@@ -69,7 +69,7 @@ https://vitejs.cn/vite3-cn/guide/api-plugin.html
 3. `buildEnd`: 结束构建
 4. `closeBundle`: 结束打包
 
-#### 5.1.2、全局钩子（vite特有钩子）
+#### 5.2.2、全局钩子（vite特有钩子）
 https://cn.vitejs.dev/guide/api-plugin.html#vite-specific-hooks
 
 1. `config`: 配置项钩子，可修改默认配置
@@ -78,14 +78,14 @@ https://cn.vitejs.dev/guide/api-plugin.html#vite-specific-hooks
 4. `transformIndexHtml`: 用于转换宿主页
 5. `handleHotUpdate`: 自定义HMR更新时调用
 
-#### 5.1.3、局部钩子(文件钩子， 每次模块请求都会被调用)
+#### 5.2.3、局部钩子(文件钩子， 每次模块请求都会被调用)
 https://cn.vitejs.dev/guide/api-plugin.html#universal-hooks
 
 1. `resolveId`: 解析`import`引入文件、虚拟模块路径(确认id)
 2. `load`: 加载虚拟文件、磁盘、网络
 3. `transform`: 转换文件内容(code)
 
-#### 5.1.4、钩子执行顺序
+#### 5.2.4、钩子执行顺序
 ```js
 export default function VitePluginExample () {
   return {
@@ -110,7 +110,7 @@ export default function VitePluginExample () {
     /// 开发服务器
     configureServer(server) {
       console.log('configureServer');
-      // server.app.use((req, res, next) => {
+      // server.middlewares.use((req, res, next) => {
       //   // custom handle request...
       // })
     },
@@ -149,3 +149,234 @@ export default function VitePluginExample () {
   };
 }
 ```
+
+### 5.3、resolveId和load
+:::tip
+- 加载虚拟文件、网络文件
+- resolveId和load一般配合使用
+:::
+
+#### 5.3.1、resolveId插件优先级问题
+:::tip
+- 有一个`resolveId`插件处理过返回了结果，后续的`resolveId`将不会执行
+- vite核心会优先使用核心`resolvePlugin`插件，需要获取未处理的资源需要添加`enforce: 'pre'`
+- vite核心插件会跳过对`\0`或者`vertual:`前缀开头的资源的处理
+:::
+1、插件
+```ts
+// vite-plugin-load.ts
+export default function VitePlugLoad() {
+  return {
+    name: 'vite-plugin-load',
+    // 在核心插件之前执行
+    enforce: 'pre',
+    // 确认id，处理import
+    resolveId(source) {
+      if (source === 'virtual-module') {
+        // 跳过核心插件处理
+        return '\0'+source;
+      }
+    },
+    load(id) {
+      if (id === '\0'+'virtual-module') {
+        return `export default "this is a virtual!!!"`
+      }
+    }
+  }
+} 
+```
+2、配置`vite.config.ts`
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginLoad from './plugins/vite-plugin-load'
+
+export default defineConfig({
+  plugins: [vue(), VitePluginLoad()],
+})
+```
+
+3、使用
+```ts
+import VirtualModule from 'virtual-module'
+
+console.log('$---', VirtualModule);
+```
+
+### 5.4、transform钩子
+:::tip
+对文件内容进行转换或者修改
+:::
+1、插件
+```ts
+// vite-plugin-transform.ts
+export default function VitePlugTransform() {
+  return {
+    name: 'vite-plugin-transform',
+    transform(code, id) {
+      // id 文件路径
+      if (id.endsWith('.tss')) {
+        return {
+          code: `
+          const tssCode = ${JSON.stringify(code)};
+          export { tssCode };
+          export default { tssCode };
+          `,
+          map: null // 如果可行提供source map
+        }
+      }
+    }
+  }
+}
+```
+```ts
+// test.tss
+[
+  {
+    name: 'zw'
+  }
+]
+```
+2、配置`vite.config.ts`
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginTransform from './plugins/vite-plugin-transform'
+
+export default defineConfig({
+  plugins: [vue(), VitePluginTransform()],
+})
+```
+
+3、使用
+```ts
+import tssObj, { tssCode as tssCode2 } from './test.tss'
+
+console.log('$---', tssObj.tssCode, '\n', '---', tssCode2);
+```
+
+### 5.5、configureServer钩子
+:::tip
+配置dev server
+:::
+1、插件
+```ts
+// vite-plugin-serve.ts
+export default function VitePlugServe() {
+  return {
+    name: 'vite-plugin-serve',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        // 自定义请求处理...
+        if (req.url === '/api/users') {
+          res.statusCode = 200
+          res.setHeader('Content-Type', 'application/json')
+          res.end('users')
+        } else {
+          next()
+        }
+      })
+    }
+  }
+}
+```
+2、配置`vite.config.ts`
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginServe from './plugins/vite-plugin-serve'
+
+export default defineConfig({
+  plugins: [vue(), VitePluginServe()],
+})
+```
+
+3、在浏览器中访问地址
+```ts
+http://localhost:3000/api/users
+```
+
+### 5.6、transformIndexHtml
+:::tip
+转换html
+:::
+1、插件
+```ts
+// vite-plugin-transform-index-html.ts
+export default function VitePlugTransformIndexHtml() {
+  return {
+    name: 'vite-plugin-transform-index-html',
+    transformIndexHtml(html) {
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`
+      )
+    }
+  }
+}
+```
+2、配置`vite.config.ts`
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginTransformIndexHtml from './plugins/vite-plugin-transform-index-html'
+export default defineConfig({
+  plugins: [vue(), VitePluginTransform()],
+})
+```
+
+## 6、示例
+### 6.1、从window中引入jQuery
+1、插件
+```ts
+export default function VitePlugjQuery() {
+  return {
+    name: 'vite-plugin-jquery',
+    enforce: 'pre',
+    resolveId(source) {
+      if (source === 'jQuery') {
+        return '\0'+source;
+      }
+    },
+    load(id) {
+      if (id === '\0jQuery') {
+        return `export default window.jQuery;`
+      }
+    }
+  }
+}
+```
+2、配置`vite.config.ts`
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginjQuery from './plugins/vite-plugin-jquery'
+export default defineConfig({
+  plugins: [vue(), VitePluginjQuery()],
+})
+```
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <script src="https://unpkg.com/jquery@3.7.0/dist/jquery.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+```
+
+3、引入
+```ts
+// main.ts
+import jQuery from 'jquery';
+
+console.log('$---', jQuery);
+``

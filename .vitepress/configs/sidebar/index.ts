@@ -154,6 +154,7 @@ export const sidebarZh = {
         { text: '1、Vite简介', link: '/f2e/bundle/vite简介.md' },
         { text: '2、Vite Plugin简介', link: '/f2e/bundle/vite-plugin简介.md' },
         { text: '3、Vite-Plugin-Mock简介', link: '/f2e/bundle/vite-plugin-mock.md' },
+        { text: '4、Vite-Plugin-Mini-I18n简介', link: '/f2e/bundle/vite-plugin-mini-i18n.md' },
       ]
     }
   ],
@@ -181,7 +182,8 @@ export const sidebarZh = {
       text: 'JavaScript',
       collapsed: false,
       items: [
-        { text: '简介', link: '/f2e/script/js/index.md' },
+        { text: '1、JavaScript简介', link: '/f2e/script/js/index.md' },
+        { text: '2、XHR简介', link: '/f2e/script/js/xhr简介.md' },
       ]
     },
     {
