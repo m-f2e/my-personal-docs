@@ -127,6 +127,7 @@ export const sidebarZh = {
       items: [
         { text: '1、Vue2基础知识', link: '/f2e/vue/vue2/vue2基础知识.md' },
         { text: '2、Vue2高级知识', link: '/f2e/vue/vue2/vue2高级知识.md' },
+        { text: '3、虚拟列表', link: '/f2e/vue/vue2/虚拟列表.md' },
       ]
     },
     {
@@ -134,6 +135,20 @@ export const sidebarZh = {
       collapsed: false,
       items: [
         { text: '1、Petite-Vue简介', link: '/f2e/vue/petite-vue/简介.md' },
+      ]
+    },
+    {
+      text: 'Nuxt3',
+      collapsed: false,
+      items: [
+        { text: '1、Nuxt简介', link: '/f2e/vue/nuxt/nuxt3简介.md' },
+      ]
+    },
+    {
+      text: 'Nuxt.JS',
+      collapsed: false,
+      items: [
+        { text: '1、NuxtJS简介', link: '/f2e/vue/nuxtjs/nuxtjs简介.md' },
       ]
     }
   ],
@@ -173,7 +188,8 @@ export const sidebarZh = {
       text: 'CSS/CSS3案例',
       collapsed: false,
       items: [
-        { text: '1、不同设备展示1px', link: '/f2e/css/1px.md' }
+        { text: '1、不同设备展示1px', link: '/f2e/css/1px.md' },
+        { text: '2、css开发小技巧', link: '/f2e/css/css开发小技巧.md' },
       ]
     }
   ],
@@ -184,6 +200,7 @@ export const sidebarZh = {
       items: [
         { text: '1、JavaScript简介', link: '/f2e/script/js/index.md' },
         { text: '2、XHR简介', link: '/f2e/script/js/xhr简介.md' },
+        { text: '3、开发实用技巧', link: '/f2e/script/js/开发实用技巧.md' },
       ]
     },
     {
@@ -227,13 +244,4 @@ export const sidebarZh = {
       ]
     }
   ],
-  '/backend/nuxtjs/': [
-    {
-      text: 'NuxtJS',
-      collapsed: false,
-      items: [
-        { text: '1、NuxtJS简介', link: '/backend/nuxtjs/nuxtjs简介.md' },
-      ]
-    }
-  ]
 }

@@ -315,6 +315,39 @@ export default function VitePlugTransformIndexHtml() {
   }
 }
 ```
+```ts
+import { execSync } from "child_process";
+
+export default function VitePlugGit() {
+  const hash = runGit("git rev-parse HEAD");
+  const branch = runGit("git rev-parse --abbrev-ref HEAD");
+  const date = runGit("git log -1 --format=%ci");
+
+  function runGit(str) {
+    return execSync(str).toString().replace("\n", "");
+  }
+
+  return {
+    name: 'vite-plugin-git',
+    apply: 'build',
+    transformIndexHtml(html) {
+      // 写入head中的script标签
+      return [
+        {
+        tag: "script",
+        children: `
+          console.info("branch: ${branch}")
+          console.info("hash: ${hash}")
+          console.info("date: ${date}")
+        `,
+        injectTo: "head",
+        },
+      ];
+    }
+  }
+}
+```
+
 2、配置`vite.config.ts`
 ```ts
 import { defineConfig } from 'vite'
