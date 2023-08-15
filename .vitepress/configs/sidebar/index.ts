@@ -21,8 +21,9 @@ export const sidebarZh = {
       text: '移动端/Objective-C',
       collapsed: false,
       items: [
-        { text: '1、Objective-C/C++', link: '/phone/oc/' },
+        { text: '1、Objective-C/C++简介', link: '/phone/oc/' },
         { text: '2、WKWebView简介', link: '/phone/oc/wkwebview.md' },
+        { text: '3、开发实用技巧', link: '/phone/oc/开发实用技巧.md' },
       ]
     },
     {
@@ -201,6 +202,7 @@ export const sidebarZh = {
         { text: '1、JavaScript简介', link: '/f2e/script/js/index.md' },
         { text: '2、XHR简介', link: '/f2e/script/js/xhr简介.md' },
         { text: '3、开发实用技巧', link: '/f2e/script/js/开发实用技巧.md' },
+        { text: '4、gasp动画库', link: '/f2e/script/js/gasp动画库.md' },
       ]
     },
     {

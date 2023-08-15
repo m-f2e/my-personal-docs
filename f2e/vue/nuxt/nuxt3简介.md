@@ -10,6 +10,7 @@
 
 ## 2、官网
 英文官网： https://nuxt.com/
+
 中文官网： https://www.nuxt.com.cn/
 
 ## 3、项目配置
@@ -96,6 +97,20 @@ nuxt3-learn
     <NuxtPage></NuxtPage>
   </NuxtLayout>
 </template>
+```
+
+- Head: 页面头部
+```vue
+<Head>
+  <title>app page</title>
+</Head>
+```
+
+- Title: 页面标题
+```vue
+<Head>
+  <Title>app page</Title>
+</Head>
 ```
 
 #### 4.1.2、自定义组件
@@ -244,6 +259,12 @@ pages
 </template>
 ```
 
+#### 4.2.5、编程式路由导航
+```vue
+navigateTo({
+  path: '/details'
+})
+```
 ### 4.3、布局
 
 #### 4.3.1、通用布局
@@ -489,6 +510,25 @@ pick选取指定数据
 const { data } = await useFetch('/api/books', { method: 'GET', pick: ['books'] })
 ```
 
+#### 4.6.4、useHead
+```vue
+<script setup lang="ts">
+useHead({
+  title: 'My App',
+  meta: [
+    { name: 'description', content: 'My amazing site.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  },
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - Site Title` : 'Site Title';
+  },
+  script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
+})
+</script>
+```
+
 ### 4.7、插件
 :::tip
 - 插件现在有不同的格式，并且只接受一个参数(nuxtApp)
@@ -512,6 +552,53 @@ export default defineNuxtPlugin(nuxtApp => {
 const { $injected } = useNuxtApp()
 
 console.log('$---', $injected());
+</script>
+```
+### 4.8、middleware
+在项目根目录下创建`middleware`目录, 新建`auth.ts`
+```shell
+export default defineNuxtRouteMiddleware((to, from) => {
+  if (to.params.user_id === '1') {
+    return abortNavigation()
+  }
+  return navigateTo('/')
+})
+```
+```vue
+// app.vue
+<script setup>
+const { $injected } = useNuxtApp()
+console.log('$---', $injected());
+</script>
+```
+
+### 4.9、runtimeConfig
+修改`nuxt.config.ts`
+```shell
+export default defineNuxtConfig({
+  runtimeConfig: {
+    apiSecret: '',
+    public: {
+      apiBase: ''
+    },
+    api: {
+      url: ''
+    }
+  }
+})
+```
+创建`.env`文件
+```shell
+NUXT_API_SECRET=123
+NUXT_PUBLIC_API_BASE=http://localhost:3000/api
+```
+
+使用
+```vue
+// app.vue
+<script setup>
+const config = useRuntimeConfig()
+console.log('$---', config.public.apiBase);
 </script>
 ```
 
