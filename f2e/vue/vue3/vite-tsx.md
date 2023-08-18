@@ -23,6 +23,13 @@ export default defineConfig({
 })
 ```
 
+修改`tsconfig.json`配置文件
+```json
+"jsx": "preserve",
+"jsxFactory": "h",
+"jsxFragmentFactory": "Fragment"
+```
+
 ## 3、纯jsx
 ### 3.1、组件写法
 ```tsx
@@ -50,7 +57,7 @@ export default ({count}: {count: Ref<number>})=> {
 ```
 ### 3.3、点击事件
 :::warning
-纯jsx语法无法设置响应式
+纯jsx语法设置响应式需要将响应式写在函数式组件外
 :::
 
 ```tsx
@@ -61,13 +68,12 @@ export default ()=> {
 }
 ```
 
-错误示例：
 ```tsx
 // 纯jsx使用v-model做数据绑定无法使用响应式！！！
 import { ref } from 'vue'
+const countRef = ref(111)
 
 export default ()=> {
-  const countRef = ref(111)
   return (
     <input v-model={countRef.value} />
   )
@@ -81,8 +87,133 @@ export default ()=> {
   <div :style="{ display: 'inline-block', backgroundColor: 'skyblue', padding: '10px 20px', borderRadius: '5px' }" @click="clickShow=!clickShow">点我试试</div>
 </TsxContainer>
 
-### 3.4、事件
+### 3.4、tsx与v-model
+```tsx
+import { ref } from 'vue'
+const v = ref<string>('')
+
+export default (props, context) => {
+  const count = props.count
+  return (
+    <>
+      {/* props.count */}
+      <div>props: {count}</div>
+      <input v-model={count} style={{ border: '1px solid red' }} />
+
+      {/* ref value */}
+      <div>ref: { v.value }</div>
+      <input v-model={v.value} type="text" style={{ border: '1px solid green' }}  />
+    </>
+  )
+}
+```
 <RenderX :count="1" />
+
+### 3.5、v-bind
+```tsx
+import { ref } from 'vue'
+
+const arr = [1, 2, 3, 4, 5]
+
+<div data-arr={arr}>1</div>
+// <div data-arr="1,2,3,4,5">1</div>
+```
+
+### 3.6、v-on
+:::tip
+- 所有事件有on开头
+- 所有事件名称首字母大写
+:::
+```tsx
+<button onClick={clickTap}>点击</button>
+```
+
+### 3.7、props
+```tsx
+type Props = {
+  title:string
+}
+ 
+const renderDom = (props:Props) => {
+  return (
+    <>
+      <div>{props.title}</div>
+      <button onClick={clickTap}>点击</button>
+    </>
+  )
+}
+```
+### 3.8、Emit派发
+```tsx
+type Props = {
+    title: string
+}
+ 
+const renderDom = (props: Props,content:any) => {
+  return (
+    <>
+      <div>{props.title}</div>
+      <button onClick={clickTap.bind(this,content)}>点击</button>
+    </>
+  )
+}
+ 
+const clickTap = (ctx:any) => {
+  ctx.emit('on-click',1)
+}
+```
+
+### 3.9、slot
+```tsx
+const A = (props, { slots }) => (
+  <>
+    <h1>{ slots.default ? slots.default() : 'foo' }</h1>
+    <h2>{ slots.bar?.() }</h2>
+  </>
+);
+ 
+const App = {
+  setup() {
+    const slots = {
+      bar: () => <span>B</span>,
+    };
+    return () => (
+      <A v-slots={slots}>
+        <div>A</div>
+      </A>
+    );
+  },
+};
+ 
+// or
+ 
+const App = {
+  setup() {
+    const slots = {
+      default: () => <div>A</div>,
+      bar: () => <span>B</span>,
+    };
+    return () => <A v-slots={slots} />;
+  },
+};
+ 
+// or you can use object slots when `enableObjectSlots` is not false.
+const App = {
+  setup() {
+    return () => (
+      <>
+        <A>
+          {{
+            default: () => <div>A</div>,
+            bar: () => <span>B</span>,
+          }}
+        </A>
+        <B>{() => "foo"}</B>
+      </>
+    );
+  },
+};
+```
 
 ## 4、选项式api+jsx
 :::tip
@@ -495,6 +626,51 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
+}
+```
+
+## 6、插件
+### 6.1、编译tsx(小满的demo)
+1、第三方插件
+```shell
+npm install @vue/babel-plugin-jsx
+npm install @babel/core
+npm install @babel/plugin-transform-typescript
+npm install @babel/plugin-syntax-import-meta
+npm install @types/babel__core
+```
+
+2、插件代码
+```ts
+import type { Plugin } from 'vite'
+import * as babel from '@babel/core'; //@babel/core核心功能：将源代码转成目标代码。
+import jsx from '@vue/babel-plugin-jsx'; //Vue给babel写的插件支持tsx v-model等
+export default function (): Plugin {
+    return {
+        name: "vite-plugin-tsx",
+        config (config) {
+           return {
+              esbuild:{
+                 include:/\.ts$/
+              }
+           }
+        },
+        async transform(code, id) {
+            if (/.tsx$/.test(id)) {
+                //@ts-ignore
+                const ts = await import('@babel/plugin-transform-typescript').then(r=>r.default)
+                const res = babel.transformSync(code,{
+                    plugins:[jsx,[ts, { isTSX: true, allowExtensions: true }]], //添加babel插件
+                    ast:true, // ast: 抽象语法树，源代码语法结构的一种抽象表示。babel内部就是通过操纵ast做到语法转换。
+                    babelrc:false, //.babelrc.json
+                    configFile:false //默认搜索默认babel.config.json文件
+                })
+                return res?.code //code: 编译后的代码
+            }
+           
+            return code
+        }
+    }
 }
 ```
 

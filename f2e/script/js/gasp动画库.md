@@ -371,7 +371,66 @@ const canvasStart = () => {
 <canvas ref="canvasRef" id="canvas" width="300" height="300"></canvas>
 <button @click="canvasStart" class="btn">canvas start</button>
 
-### 5.4、from
+### 5.4、轨迹移动
+https://codepen.io/GreenSock/pen/GRoXzYj
+
+效果：
+<iframe height="300" style="width: 100%;" scrolling="no" title="Running Tractor" src="https://codepen.io/GreenSock/embed/GRoXzYj?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/GreenSock/pen/GRoXzYj">
+  Running Tractor</a> by GreenSock (<a href="https://codepen.io/GreenSock">@GreenSock</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### 5.5、翻卡效果
+
+https://codepen.io/GreenSock/pen/RwKwLWK
+
+效果:
+<iframe height="300" style="width: 100%;" scrolling="no" title="Infinite scrolling, dragging, and snapping cards with GSAP and ScrollTrigger (smooth)" src="https://codepen.io/GreenSock/embed/RwKwLWK?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/GreenSock/pen/RwKwLWK">
+  Infinite scrolling, dragging, and snapping cards with GSAP and ScrollTrigger (smooth)</a> by GreenSock (<a href="https://codepen.io/GreenSock">@GreenSock</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### 5.6、字体变形
+https://codepen.io/fluxus/pen/ZEWydKK
+
+效果：
+<iframe height="300" style="width: 100%;" scrolling="no" title="Morphing letters with GSAP ScrollTrigger and Polymorph.js" src="https://codepen.io/fluxus/embed/ZEWydKK?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/fluxus/pen/ZEWydKK">
+  Morphing letters with GSAP ScrollTrigger and Polymorph.js</a> by Mirko Zorić (<a href="https://codepen.io/fluxus">@fluxus</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### 5.7、地图轨迹
+https://codepen.io/creativeocean/pen/zYrPrgd
+
+效果：
+<iframe height="300" style="width: 100%;" scrolling="no" title="Scroll Map (Sunday Bike Route)" src="https://codepen.io/creativeocean/embed/zYrPrgd?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/creativeocean/pen/zYrPrgd">
+  Scroll Map (Sunday Bike Route)</a> by Tom Miller (<a href="https://codepen.io/creativeocean">@creativeocean</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### 5.8、自定义动画
+https://codepen.io/isladjan/pen/abdyPBw
+
+效果：
+<iframe height="300" style="width: 100%;" scrolling="no" title="Parallax scroll animation" src="https://codepen.io/isladjan/embed/abdyPBw?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/isladjan/pen/abdyPBw">
+  Parallax scroll animation</a> by isladjan (<a href="https://codepen.io/isladjan">@isladjan</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+### 5.9、颜色过渡
+https://codepen.io/Mamboleoo/pen/abdwYaJ
+
+效果：
+<iframe height="300" style="width: 100%;" scrolling="no" title="Scroll progress &amp; gsap ScrollTrigger" src="https://codepen.io/Mamboleoo/embed/abdwYaJ?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/Mamboleoo/pen/abdwYaJ">
+  Scroll progress &amp; gsap ScrollTrigger</a> by Louis Hoebregts (<a href="https://codepen.io/Mamboleoo">@Mamboleoo</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
 
 <script setup>
 import gsap from 'gsap'

@@ -761,10 +761,342 @@ function createCanvasApp(App) {
 createCanvasApp(CanvasApp).mount('#demo')
 ```
 
+### 5.2、自定义reactive
+```vue
+const myReactive = <T extends object>(obj: T) => {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      return Reflect.get(target, key, receiver)
+    },
+    set(target, key, value, receiver) {
+      return Reflect.set(target, key, value, receiver)
+    }
+  })
+}
+```
+### 5.3、自定义effect
+```vue
+<div>{{ effectValue }}</div>
+<button :style="{ color: 'red', border: '1px solid skyblue' }" @click="changeName">改变name</button>
+
+const myReactive = <T extends object>(obj: T) => {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      track(target, key)
+      return Reflect.get(target, key, receiver)
+    },
+    set(target, key, value, receiver) {
+      const res = Reflect.set(target, key, value, receiver)
+      trigger(target, key)
+      return res
+    }
+  })
+}
+
+let activeEffect; 
+const myEffect = (fn: Function) => {
+  const _effect = () => {
+    activeEffect = _effect
+    fn()
+  }
+  _effect()
+}
+
+// 收集依赖
+const targetMap = new WeakMap()
+const track = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    depsMap = new Map()
+    targetMap.set(target, depsMap)
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    dep = new Set()
+    depsMap.set(key, dep)
+  }
+  dep.add(activeEffect)
+}
+
+// 触发依赖更新
+const trigger = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    return
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    return
+  }
+  dep.forEach(effect => {
+    effect()
+  })
+}
+
+const effectValue = ref()
+const myObj = myReactive({
+  name: 'zw',
+  age: 18
+})
+myEffect(() => {
+  effectValue.value = myObj.name + myObj.age
+})
+const changeName = () => {
+  myObj.name = 'min'
+}
+```
+示例:
+<div>{{ effectValue }}</div>
+<button :style="{ color: 'red', border: '1px solid skyblue' }" @click="changeName">改变name</button>
+
+### 5.4、自定义computed
+```vue
+<div>{{ computedValue.value }}</div>
+<button :style="{ color: 'red', border: '1px solid skyblue' }" @click="changeName">改变name</button>
+
+const myReactive = <T extends object>(obj: T) => {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      const res = Reflect.get(target, key, receiver) as object
+      track(target, key)
+      if (res != null && typeof res == 'object') {
+        return myReactive(res)
+      }
+      return res
+    },
+    set(target, key, value, receiver) {
+      const res = Reflect.set(target, key, value, receiver)
+      trigger(target, key)
+      return res
+    }
+  })
+}
+
+interface Options {
+   scheduler?: Function
+}
+
+let activeEffect; 
+const myEffect = (fn: Function, options:Options) => {
+  const _effect = () => {
+    activeEffect = _effect
+    const res = fn()
+    return res
+  }
+  _effect.options = options
+  _effect()
+  return _effect
+}
+
+// 收集依赖
+const targetMap = new WeakMap()
+const track = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    depsMap = new Map()
+    targetMap.set(target, depsMap)
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    dep = new Set()
+    depsMap.set(key, dep)
+  }
+  dep.add(activeEffect)
+}
+
+// 触发依赖更新
+const trigger = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    return
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    return
+  }
+  dep.forEach(effect => {
+    if (effect.options && effect.options.scheduler) {
+      effect.options.scheduler()
+    } else {
+      effect()
+    }
+  })
+}
+
+const myComputed = (getter: Function) => {
+  let _value = myEffect(getter, {
+    scheduler: () => { _dirty = true }
+  })
+  let catchValue
+  let _dirty = true
+  class ComputedRefImpl {
+    get value() {
+      if (_dirty) {
+        catchValue = _value()
+        _dirty = false
+      }
+      return catchValue
+    }
+  }
+  return new ComputedRefImpl()
+}
+
+const effectValue = ref()
+const myObj = myReactive({
+  name: 'zw',
+  age: 18
+})
+myEffect(() => {
+  effectValue.value = myObj.name + myObj.age
+  console.log(myObj.name, myObj.age)
+})
+const changeName = () => {
+  myObj.name = 'min'
+  // console.log('--------',myObj.name)
+}
+const computedValue = myComputed(() => myObj.name + myObj.age)
+```
+示例:
+<div>{{ computedValue.value }}</div>
+<button :style="{ color: 'red', border: '1px solid skyblue' }" @click="changeName">改变name</button>
+
+### 5.5、自定义Event Bus
+```vue
+type BusClass<T> = {
+    emit: (name: T) => void
+    on: (name: T, callback: Function) => void
+}
+type BusParams = string | number | symbol 
+type List = {
+    [key: BusParams]: Array<Function>
+}
+class Bus<T extends BusParams> implements BusClass<T> {
+    list: List
+    constructor() {
+        this.list = {}
+    }
+    emit(name: T, ...args: Array<any>) {
+        let eventName: Array<Function> = this.list[name]
+        eventName.forEach(ev => {
+            ev.apply(this, args)
+        })
+    }
+    on(name: T, callback: Function) {
+        let fn: Array<Function> = this.list[name] || [];
+        fn.push(callback)
+        this.list[name] = fn
+    }
+}
+ 
+export default new Bus<number>()
+```
+
 <script setup lang="ts">
 import { ref, h, createRenderer, onMounted } from 'vue'
 import MyComponent from '../../../components/tsxComponent/render.vue'
 import FunctionComponent from '../../../components/tsxComponent/function.vue'
+
+const myReactive = <T extends object>(obj: T) => {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      const res = Reflect.get(target, key, receiver) as object
+      track(target, key)
+      if (res != null && typeof res == 'object') {
+        return myReactive(res)
+      }
+      return res
+    },
+    set(target, key, value, receiver) {
+      const res = Reflect.set(target, key, value, receiver)
+      trigger(target, key)
+      return res
+    }
+  })
+}
+
+interface Options {
+   scheduler?: Function
+}
+
+let activeEffect; 
+const myEffect = (fn: Function, options:Options) => {
+  const _effect = () => {
+    activeEffect = _effect
+    const res = fn()
+    return res
+  }
+  _effect.options = options
+  _effect()
+  return _effect
+}
+
+// 收集依赖
+const targetMap = new WeakMap()
+const track = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    depsMap = new Map()
+    targetMap.set(target, depsMap)
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    dep = new Set()
+    depsMap.set(key, dep)
+  }
+  dep.add(activeEffect)
+}
+
+// 触发依赖更新
+const trigger = (target, key) => {
+  let depsMap = targetMap.get(target)
+  if (!depsMap) {
+    return
+  }
+  let dep = depsMap.get(key)
+  if (!dep) {
+    return
+  }
+  dep.forEach(effect => {
+    if (effect.options && effect.options.scheduler) {
+      effect.options.scheduler()
+    } else {
+      effect()
+    }
+  })
+}
+
+const myComputed = (getter: Function) => {
+  let _value = myEffect(getter, {
+    scheduler: () => { _dirty = true }
+  })
+  let catchValue
+  let _dirty = true
+  class ComputedRefImpl {
+    get value() {
+      if (_dirty) {
+        catchValue = _value()
+        _dirty = false
+      }
+      return catchValue
+    }
+  }
+  return new ComputedRefImpl()
+}
+
+const effectValue = ref()
+const myObj = myReactive({
+  name: 'zw',
+  age: 18
+})
+myEffect(() => {
+  effectValue.value = myObj.name + myObj.age
+  console.log(myObj.name, myObj.age)
+})
+const changeName = () => {
+  myObj.name = 'min'
+  // console.log('--------',myObj.name)
+}
+const computedValue = myComputed(() => myObj.name + myObj.age)
 
 const MyComponent2 = {
   render() {

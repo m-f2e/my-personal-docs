@@ -105,7 +105,14 @@ const sites = [
         name: '讯飞星火',
         icon: 'https://xinghuo.xfyun.cn/static/media/gpt-logo.e9ad4150a385435f5a90b50c44dad847.svg',
         url: 'https://xinghuo.xfyun.cn/desk',
-        des: '国内可用，需要申请内测资格',
+        des: '国内可用(需要申请内测资格)',
+        recommended: true
+      },
+      {
+        name: 'C知道',
+        icon: 'https://chuchen.aust001.com/GPT4/favicon.ico',
+        url: 'https://so.csdn.net/so/search?t=chat',
+        des: 'CSDN C知道(免费)',
         recommended: true
       },
       {
