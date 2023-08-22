@@ -61,7 +61,7 @@ export default {
   },
   created(){
     this.initPositions();
-    window.vm = this;
+    //window.vm = this;
   },
   mounted() {
     this.screenHeight = this.$el.clientHeight;
