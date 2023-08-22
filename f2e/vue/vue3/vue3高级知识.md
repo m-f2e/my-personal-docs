@@ -25,7 +25,7 @@ app.mount('#app');
 ```
 
 ### 1.3、注册全局插件
-```js
+```vue
 import { createApp } from 'vue';
 
 createApp(App)
@@ -124,6 +124,7 @@ export default {
 </script>
 
 #### 1.4.5、局部指令(setup语法糖)
+
 ```vue
 <div>
   <input type="text" v-bg>
@@ -140,6 +141,42 @@ const vBg = {
 }
 </script>
 ```
+ts版本
+```vue
+<template>
+  <Dialog  v-move-directive="{background:'green',flag:show}"></Dialog>
+</template>
+
+ 
+const vMoveDirective: Directive = {
+  created: () => {
+    console.log("初始化====>");
+  },
+  beforeMount(...args: Array<any>) {
+    // 在元素上做些操作
+    console.log("初始化一次=======>");
+  },
+  mounted(el: any, dir: DirectiveBinding<Value>) {
+    el.style.background = dir.value.background;
+    console.log("初始化========>");
+  },
+  beforeUpdate() {
+    console.log("更新之前");
+  },
+  updated() {
+    console.log("更新结束");
+  },
+  beforeUnmount(...args: Array<any>) {
+    console.log(args);
+    console.log("======>卸载之前");
+  },
+  unmounted(...args: Array<any>) {
+    console.log(args);
+    console.log("======>卸载完成");
+  },
+};
+```
+
 示例：
 <div>
   <input type="text" v-bg>
@@ -184,6 +221,26 @@ const vColor = {
 ```
 <div v-color="{ bgColor: 'red', color: 'yellow' }">this is a v-color directive</div>
 
+#### 1.4.7、函数简写
+:::tip
+在`mounted`和`updated`时触发相同行为，而不关心其他的钩子函数
+:::
+```vue
+<template>
+  <A v-move="{ background: value }"></A>
+</template>
+   
+<script setup lang='ts'>
+import { ref, Directive, DirectiveBinding } from 'vue'
+let value = ref<string>('')
+type Dir = {
+   background: string
+}
+const vMove: Directive = (el, binding: DirectiveBinding<Dir>) => {
+   el.style.background = binding.value.background
+}
+</script>
+```
 ### 1.5、注册过滤器
 #### 1.5.1、全局过滤器
 ```vue
@@ -948,7 +1005,7 @@ const myObj = myReactive({
 })
 myEffect(() => {
   effectValue.value = myObj.name + myObj.age
-  console.log(myObj.name, myObj.age)
+  // console.log(myObj.name, myObj.age)
 })
 const changeName = () => {
   myObj.name = 'min'
@@ -989,13 +1046,460 @@ class Bus<T extends BusParams> implements BusClass<T> {
 }
  
 export default new Bus<number>()
+``` 
+
+### 5.6、拖拽(指令示例)
+```vue
+<div class="drag">
+  <div v-move class="box">
+    <div class="header"></div>
+    <div>内容</div>
+  </div>
+</div>
+
+const vMove: Directive = {
+  mounted(el: HTMLElement) {
+    // header
+    const moveEl = el.firstElementChild as HTMLElement
+    const mouseDown = (e: MouseEvent) => {
+      //鼠标点击物体那一刻相对于物体左侧边框的距离=点击时的位置相对于浏览器最左边的距离-物体左边框相对于浏览器最左边的距离
+      const x = e.clientX - el.offsetLeft
+      const y = e.clientY - el.offsetTop
+      // 监听拖拽事件
+      const mouseMove = (e: MouseEvent) => {
+        el.style.left = e.clientX - x + 'px'
+        el.style.top = e.clientY - y + 'px'
+      }
+     
+      document.addEventListener("mousemove", mouseMove)
+      document.addEventListener("mouseup", () => {
+        document.removeEventListener("mousemove", mouseMove)
+      })
+    }
+    // 监听鼠标按下
+    moveEl.addEventListener("mousedown", mouseDown)
+  },
+}
+```
+
+示例：
+<div class="drag">
+  <div v-move class="box">
+    <div class="header"></div>
+    <div>内容</div>
+  </div>
+</div>
+
+### 5.7、按钮权限控制(自定义指令)
+
+```vue
+<button v-has-show="'shop:create1'">创建</button>
+<button v-has-show="'shop:edit'">编辑</button>
+<button v-has-show="'shop:delete'">删除</button>
+
+// 按钮权限
+const permission = [
+  'zw:shop:edit',
+  'zw:shop:create',
+  'zw:shop:delete'
+]
+const vHasShow: Directive<HTMLElement, string> = (el, bingding) => {
+  if (!permission.includes(`zw:${bingding.value}`)) {
+    el.style.display = 'none'
+  }
+}
+```
+示例：
+<button v-has-show="'shop:create1'">创建</button>
+<button v-has-show="'shop:edit'">编辑</button>
+<button v-has-show="'shop:delete'">删除</button>
+
+### 5.8、图片懒加载(自定义指令)
+```vue
+<div :style="{ width: '100%', height: '400px', overflow: 'auto' }">
+  <div v-for="item in arr">
+    <img height="400" :data-index="item" v-lazy="item" width="360" alt="">
+  </div>
+</div>
+
+// 图片懒加载
+const arr = [
+  'https://images.unsplash.com/photo-1682685797507-d44d838b0ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+  'https://images.unsplash.com/photo-1691951171253-128bde131aaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
+  'https://plus.unsplash.com/premium_photo-1674582279349-901af56ed59b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1379&q=80'
+]
+const vLazy: Directive<HTMLElement, string> = async(el,bingding) => {
+  const url = await import('/public/logo.png')
+  el.src = url.default
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].intersectionRatio > 0 && entries[0].isIntersecting) {
+      setTimeout(() => {
+        el.src = bingding.value
+        observer.unobserve(el)
+      }, 2000)
+    }
+  })
+  observer.observe(el)
+}
+```
+示例：
+<div :style="{ width: '100%', height: '400px', overflow: 'auto' }">
+  <div v-for="item in arr">
+    <img height="400" :data-index="item" v-lazy="item" width="360" alt="">
+  </div>
+</div>
+
+### 5.9、自定义插件
+https://xiaoman.blog.csdn.net/article/details/123300264
+
+Loading.vue
+```vue
+ <template>
+    <div v-if="isShow" class="loading">
+        <div class="loading-content">Loading...</div>
+    </div>
+</template>
+    
+<script setup lang='ts'>
+import { ref } from 'vue';
+const isShow = ref(false)//定位loading 的开关
+ 
+const show = () => {
+    isShow.value = true
+}
+const hide = () => {
+    isShow.value = false
+}
+//对外暴露 当前组件的属性和方法
+defineExpose({
+    isShow,
+    show,
+    hide
+})
+</script>
+    
+<style scoped lang="less">
+.loading {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-content {
+        font-size: 30px;
+        color: #fff;
+    }
+}
+</style>
+```
+Loading.ts
+```ts
+import {  createVNode, render, VNode, App } from 'vue';
+import Loading from './index.vue'
+ 
+export default {
+    install(app: App) {
+        //createVNode vue提供的底层方法 可以给我们组件创建一个虚拟DOM 也就是Vnode
+        const vnode: VNode = createVNode(Loading)
+        //render 把我们的Vnode 生成真实DOM 并且挂载到指定节点
+        render(vnode, document.body)
+        // Vue 提供的全局配置 可以自定义
+        app.config.globalProperties.$loading = {
+            show: () => vnode.component?.exposed?.show(),
+            hide: () => vnode.component?.exposed?.hide()
+        }
+ 
+    }
+}
+```
+
+main.ts
+```ts
+import Loading from './components/loading'
+ 
+let app = createApp(App)
+ 
+app.use(Loading)
+ 
+type Lod = {
+    show: () => void,
+    hide: () => void
+}
+//编写ts loading 声明文件放置报错 和 智能提示
+declare module '@vue/runtime-core' {
+    export interface ComponentCustomProperties {
+        $loading: Lod
+    }
+}
+ 
+app.mount('#app')
+```
+使用：
+```vue
+<template>
+ 
+  <div></div>
+ 
+</template>
+ 
+<script setup lang='ts'>
+import { ref,reactive,getCurrentInstance} from 'vue'
+const  instance = getCurrentInstance()  
+instance?.proxy?.$Loading.show()
+setTimeout(()=>{
+  instance?.proxy?.$Loading.hide()
+},5000)
+ 
+ 
+// console.log(instance)
+</script>
+<style>
+*{
+  padding: 0;
+  margin: 0;
+}
+</style>
+```
+
+### 5.10、自定义Vue use
+```ts
+import type { App } from 'vue'
+import { app } from './main'
+ 
+interface Use {
+  install: (app: App, ...options: any[]) => void
+}
+ 
+const installedList = new Set()
+ 
+export function MyUse<T extends Use>(plugin: T, ...options: any[]) {
+    if(installedList.has(plugin)){
+      return console.warn('重复添加插件',plugin)
+    }else{
+        plugin.install(app, ...options)
+        installedList.add(plugin)
+    }
+}
+```
+
+### 5.11、图片下载(自定义hook)
+```vue
+<img class="imgHook" src="/public/logo.png" alt="">
+
+// 图片下载hook
+type ImgOptions = {
+  el: string
+}
+
+type Return = {
+  BaseUrl: string | null
+}
+
+const imgBase64Hook = (option: ImgOptions): Promise<Return> => {
+  return new Promise((resolve, reject) => {
+    onMounted(() => {
+      const file: HTMLImageElement = document.querySelector(option.el) as HTMLImageElement
+      file.onload = () => {
+        resolve({
+          BaseUrl: toBase64(file)
+        })
+      }
+    })
+    const toBase64 = (el: HTMLImageElement): string => {
+      const canvas: HTMLCanvasElement = document.createElement('canvas')
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+      canvas.width = el.width
+      canvas.height = el.height
+      ctx.drawImage(el, 0, 0, canvas.width,canvas.height)
+      return canvas.toDataURL('image/png')
+    }
+  })
+}
+
+// 使用
+imgBase64Hook({
+  el: '.imgHook'
+}).then((res) => {
+  console.log(res)
+})
+```
+示例：
+<img class="imgHook" src="/public/logo.png" alt="">
+
+### 5.12、监听元素变化(自定义hook+指令)
+```ts
+import { App, defineComponent, onMounted } from 'vue'
+ 
+function useResize(el: HTMLElement, callback: (cr: DOMRectReadOnly,resize:ResizeObserver) => void) {
+    let resize: ResizeObserver
+        resize = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                const cr = entry.contentRect;
+                callback(cr,resize)
+            }
+        });
+        resize.observe(el)
+}
+ 
+const install = (app: App) => {
+    app.directive('resize', {
+        mounted(el, binding) {
+            useResize(el, binding.value)
+        }
+    })
+}
+ 
+useResize.install = install
+ 
+export default useResize
+```
+## 6、自定义元素(defineCustomElement)
+告知vue这是一个自定义Component 跳过组件检查
+```ts
+/*vite config ts 配置*/
+vue({
+   template:{
+     compilerOptions:{
+         isCustomElement:(tag)=> tag.includes('my-')
+      }
+    }
+})
+```
+父组件
+```vue
+<template>
+    <div>
+        <my-btn :title=" JSON.stringify(name) "></my-btn>
+    </div>
+</template>
+ 
+<script setup lang='ts'>
+import { ref, reactive, defineCustomElement } from 'vue'
+//自定义元素模式  要开启这个模式，只需要将你的组件文件以 .ce.vue 结尾即可
+import customVueVue from './components/custom-vue.ce.vue'
+const Btn = defineCustomElement(customVueVue)
+customElements.define('my-btn', Btn)
+const name = ref({a:1})
+</script>
+```
+
+子组件
+```vue
+<template>
+  <div>
+    hello {{title}}
+  </div>
+</template>
+ 
+<script setup lang='ts'>
+import { ref, reactive } from 'vue'
+defineProps<{
+    title:string
+}>()
+</script>
 ```
 
 <script setup lang="ts">
-import { ref, h, createRenderer, onMounted } from 'vue'
+import { ref, h, createRenderer, onMounted, Directive } from 'vue'
 import MyComponent from '../../../components/tsxComponent/render.vue'
 import FunctionComponent from '../../../components/tsxComponent/function.vue'
 
+// 图片下载hook
+type ImgOptions = {
+  el: string
+}
+
+type Return = {
+  BaseUrl: string | null
+}
+
+const imgBase64Hook = (option: ImgOptions): Promise<Return> => {
+  return new Promise((resolve, reject) => {
+    onMounted(() => {
+      const file: HTMLImageElement = document.querySelector(option.el) as HTMLImageElement
+      file.onload = () => {
+        resolve({
+          BaseUrl: toBase64(file)
+        })
+      }
+    })
+    const toBase64 = (el: HTMLImageElement): string => {
+      const canvas: HTMLCanvasElement = document.createElement('canvas')
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+      canvas.width = el.width
+      canvas.height = el.height
+      ctx.drawImage(el, 0, 0, canvas.width,canvas.height)
+      return canvas.toDataURL('image/png')
+    }
+  })
+}
+
+imgBase64Hook({
+  el: '.imgHook'
+}).then((res) => {
+  console.log(res)
+})
+
+// 图片懒加载
+const arr = [
+  'https://images.unsplash.com/photo-1682685797507-d44d838b0ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+  'https://images.unsplash.com/photo-1691951171253-128bde131aaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
+  'https://plus.unsplash.com/premium_photo-1674582279349-901af56ed59b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1379&q=80'
+]
+const vLazy: Directive<HTMLElement, string> = async(el,bingding) => {
+  const url = await import('/public/logo.png')
+  el.src = url.default
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].intersectionRatio > 0 && entries[0].isIntersecting) {
+      setTimeout(() => {
+        el.src = bingding.value
+        observer.unobserve(el)
+      }, 2000)
+    }
+  })
+  observer.observe(el)
+}
+
+
+// 按钮权限
+const permission = [
+  'zw:shop:edit',
+  'zw:shop:create',
+  'zw:shop:delete'
+]
+const vHasShow: Directive<HTMLElement, string> = (el, bingding) => {
+  if (!permission.includes(`zw:${bingding.value}`)) {
+    el.style.display = 'none'
+  }
+}
+
+// 自定义拖拽指令
+const vMove: Directive = {
+  mounted(el: HTMLElement) {
+    // header
+    const moveEl = el.firstElementChild as HTMLElement
+    const mouseDown = (e: MouseEvent) => {
+      //鼠标点击物体那一刻相对于物体左侧边框的距离=点击时的位置相对于浏览器最左边的距离-物体左边框相对于浏览器最左边的距离
+      const x = e.clientX - el.offsetLeft
+      const y = e.clientY - el.offsetTop
+      // 监听拖拽事件
+      const mouseMove = (e: MouseEvent) => {
+        el.style.left = e.clientX - x + 'px'
+        el.style.top = e.clientY - y + 'px'
+      }
+     
+      document.addEventListener("mousemove", mouseMove)
+      document.addEventListener("mouseup", () => {
+        document.removeEventListener("mousemove", mouseMove)
+      })
+    }
+    // 监听鼠标按下
+    moveEl.addEventListener("mousedown", mouseDown)
+  },
+}
+
+// 响应式
 const myReactive = <T extends object>(obj: T) => {
   return new Proxy(obj, {
     get(target, key, receiver) {
@@ -1090,7 +1594,7 @@ const myObj = myReactive({
 })
 myEffect(() => {
   effectValue.value = myObj.name + myObj.age
-  console.log(myObj.name, myObj.age)
+  // console.log(myObj.name, myObj.age)
 })
 const changeName = () => {
   myObj.name = 'min'
@@ -1145,3 +1649,32 @@ const enterAction = () => {
 }
 
 </script>
+
+<style scoped lang="scss">
+.drag {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  .box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 2px solid red;
+    .header {
+      height: 20px;
+      background: skyblue;
+      cursor: move;
+    }
+  }
+}
+button {
+  border: 1px solid lightgray;
+  padding: 5px 10px;
+  margin: 10px;
+}
+</style>

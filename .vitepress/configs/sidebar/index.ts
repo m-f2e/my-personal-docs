@@ -108,6 +108,7 @@ export const sidebarZh = {
       items: [
         { text: '1、HTML/HTML5简介', link: '/f2e/html/index.md' },
         { text: '2、Canvas简介', link: '/f2e/html/canvas简介.md' },
+        { text: '3、WebComponent简介', link: '/f2e/html/webComponent简介.md' },
       ]
     },
   ],
@@ -120,6 +121,9 @@ export const sidebarZh = {
         { text: '2、Vue3高级知识', link: '/f2e/vue/vue3/vue3高级知识.md' },
         { text: '3、Vue3+Vite', link: '/f2e/vue/vue3/vite.md' },
         { text: '4、Vue3+Vite+TSX', link: '/f2e/vue/vue3/vite-tsx.md' },
+        { text: '5、Mitt事件发布监听', link: '/f2e/vue/vue3/mitt事件发布监听.md' },
+        { text: '6、VueUse简介', link: '/f2e/vue/vue3/vueUse简介.md' },
+        { text: '7、Vue3+Electron简介', link: '/f2e/vue/vue3/vue3+electron简介.md' },
       ]
     },
     {

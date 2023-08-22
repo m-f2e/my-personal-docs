@@ -143,7 +143,7 @@ const renderDom = (props:Props) => {
   )
 }
 ```
-### 3.8、Emit派发
+### 3.8、emit派发
 ```tsx
 type Props = {
     title: string

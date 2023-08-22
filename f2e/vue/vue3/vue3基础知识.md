@@ -199,7 +199,7 @@ type Obj = {
   name: string
 }
 let message: Ref<Obj> = shallowRef({
-  name: "小满"
+  name: "zw"
 })
 
 // 无法监听
@@ -217,10 +217,10 @@ type Obj = {
   name: string
 }
 let message: Ref<Obj> = shallowRef({
-  name: "小满"
+  name: "hello"
 })
 
-message.value.name = '大满'
+message.value.name = 'hello1'
 // 强制更新页面DOM
 triggerRef(message)
 ```
@@ -326,6 +326,81 @@ const state = toRaw(obj)
 <keep-alive :include="" :exclude="" :max=""></keep-alive>
 ```
 
+#### 3.2.15、动态css
+```vue
+<div class="dyDiv">mz hello</div>
+
+const red = ref('red')
+const redObj = reactive({
+  color: 'red'
+})
+.dyDiv {
+  color: v-bind(red);
+  color: v-bind('redObj.color');
+}
+```
+示例：
+<div class="dyDiv">mz hello</div>
+
+#### 3.2.16、css module
+:::tip
+`<style module>`标签会被编译为 CSS Modules 并且将生成的 CSS 类作为 $style 对象的键暴露给组件
+:::
+
+```vue
+<template>
+    <div :class="$style.red">
+      hello
+    </div>
+</template>
+ 
+<style module>
+.red {
+    color: red;
+    font-size: 20px;
+}
+</style>
+```
+
+```vue
+<template>
+    <div :class="[zs.red,zs.border]">
+        弟弟
+    </div>
+</template>
+ 
+<style module="zs">
+.red {
+    color: red;
+    font-size: 20px;
+}
+.border{
+    border: 1px solid #ccc;
+}
+</style>
+```
+
+```vue
+<template>
+    <div :class="[zs.red,zs.border]">hello</div>
+</template>
+ 
+ 
+<script setup lang="ts">
+import { useCssModule } from 'vue'
+const css = useCssModule('zs')
+</script>
+ 
+<style module="zs">
+.red {
+    color: red;
+    font-size: 20px;
+}
+.border{
+    border: 1px solid #ccc;
+}
+</style>
+```
 
 ### 3.3、setup语法糖
 :::tip
@@ -906,4 +981,12 @@ const list = [
       background: 'green'
   }
 ]
+
+const red = ref('red')
 </script>
+
+<style lang="scss" scoped>
+.dyDiv {
+  color: v-bind(red);
+}
+</style>
