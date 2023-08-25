@@ -165,6 +165,7 @@ export const sidebarZh = {
         { text: '1、unbuild', link: '/f2e/bundle/unbuild打包.md' },
         { text: '2、tsup', link: '/f2e/bundle/tsup打包.md' },
         { text: '3、rollup', link: '/f2e/bundle/rollup打包.md' },
+        { text: '4、esbuild', link: '/f2e/bundle/esbuild打包.md' },
       ]
     },
     {
@@ -213,7 +214,9 @@ export const sidebarZh = {
       text: 'TypeScript',
       collapsed: false,
       items: [
-        { text: 'Deploy', link: '/f2e/script/ts/index.md' }
+        { text: '1、TypeScript简介', link: '/f2e/script/ts/index.md' },
+        { text: '2、Typescript订阅监听', link: '/f2e/script/ts/typescript订阅监听.md' },
+        { text: '3、Typescript进阶', link: '/f2e/script/ts/typescript进阶.md' }
       ]
     }
   ],
@@ -247,6 +250,7 @@ export const sidebarZh = {
       items: [
         { text: '1、NodeJS简介', link: '/backend/nodejs/nodejs简介.md' },
         { text: '2、Node + TS简介', link: '/backend/nodejs/nodejs+ts.md' },
+        { text: '3、搭建npm私服', link: '/backend/nodejs/搭建npm私服.md' },
       ]
     }
   ],

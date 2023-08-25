@@ -7,6 +7,35 @@
 ## 2、官网
 中文网：https://vitejs.cn/
 
-## 3、import.meta
+## 3、api
+### 3.1、import.meta
 
-### 3.1、import.meta.glob
+#### 3.1.1、import.meta.glob
+
+## 4、打包
+### 4.1、umd+mjs
+:::tip
+默认会打出来`.mjs`和`umd.js`文件
+:::
+vite.config.ts
+```ts
+import { defineConfig } from 'vite'
+
+// umd 支持amd cmd cjs 全局变量模式
+export default defineConfig({
+  build: {
+    lib: {
+      entry: 'src/main.ts',
+      name: 'useResize'
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          useResize: 'useResize'
+        }
+      }
+    }
+  }
+})
+```
