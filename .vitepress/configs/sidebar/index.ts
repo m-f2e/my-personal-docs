@@ -24,6 +24,7 @@ export const sidebarZh = {
         { text: '1、Objective-C/C++简介', link: '/phone/oc/' },
         { text: '2、WKWebView简介', link: '/phone/oc/wkwebview.md' },
         { text: '3、开发实用技巧', link: '/phone/oc/开发实用技巧.md' },
+        { text: '4、SimplePing', link: '/phone/oc/simpleping.md' },
       ]
     },
     {
@@ -220,6 +221,22 @@ export const sidebarZh = {
       ]
     }
   ],
+  '/f2e/wechat/': [
+    {
+      text: '微信小程序',
+      collapsed: false,
+      items: [
+        { text: '1、微信小程序简介', link: '/f2e/wechat/index.md' },
+      ]
+    },
+    {
+      text: 'Taro',
+      collapsed: false,
+      items: [
+        { text: '1、Taro简介', link: '/f2e/wechat/taro简介.md' },
+      ]
+    }
+  ],
   '/tool/vscode/': [
     {
       text: 'VSCode',
@@ -251,6 +268,17 @@ export const sidebarZh = {
         { text: '1、NodeJS简介', link: '/backend/nodejs/nodejs简介.md' },
         { text: '2、Node + TS简介', link: '/backend/nodejs/nodejs+ts.md' },
         { text: '3、搭建npm私服', link: '/backend/nodejs/搭建npm私服.md' },
+        { text: '4、实用小工具', link: '/backend/nodejs/实用小工具.md' },
+      ]
+    }
+  ],
+  '/backend/express/': [
+    {
+      text: 'Express',
+      collapsed: false,
+      items: [
+        { text: '1、Express简介', link: '/backend/express/express简介.md' },
+        { text: '2、Express+Socket', link: '/backend/express/express+socket.md' },
       ]
     }
   ],

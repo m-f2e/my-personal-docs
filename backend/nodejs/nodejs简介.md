@@ -16,3 +16,48 @@ https://nodejs.org/zh-cn
 [nvm安装文档](/tool/efficiency/nvm简介) 
 
 ## 4、语法
+### 4.1、系统API
+#### 4.1.1、process(进程)
+##### 4.1.1.1、process.cwd（命令行工作目录）
+```ts
+process.cwd()
+```
+##### 4.1.1.2、process.env（环境变量）
+```ts
+process.env
+```
+##### 4.1.1.3、process.argv（命令行参数）
+```ts
+process.argv
+```
+
+#### 4.1.2、path(路径)
+##### 4.1.2.1、path.join(路径拼接)
+```ts
+path.join('a', 'b', 'c')
+```
+##### 4.1.2.2、path.resolve(路径拼接)
+```ts
+path.resolve(__dirname, 'index.ts')
+```
+##### 4.1.2.3、path.dirname(获取目录名)
+```ts
+path.dirname(__dirname)
+```
+##### 4.1.2.4、path.basename(获取文件名)
+```ts
+path.basename(__dirname)
+```
+##### 4.1.2.5、path.extname(获取扩展名)
+```ts
+path.extname(__dirname)
+```
+
+#### 4.1.2.6、path.sep(获取路径分隔符)
+```ts
+path.sep
+
+// /
+```
+
+#### 4.1.3、1

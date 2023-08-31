@@ -56,6 +56,7 @@ export const navZh = [
           { text: "React", link: "/f2e/react/" },
           { text: "Svelte", link: "/f2e/svelte/" },
           { text: "Solid", link: "/f2e/solid/" },
+          { text: "微信小程序", link: "/f2e/wechat/" },
         ]
       },
       {
@@ -76,6 +77,7 @@ export const navZh = [
         text: "NodeJS", 
         items: [
           { text: "NodeJS", link: "/backend/nodejs/nodejs简介.md" },
+          { text: "Express", link: "/backend/express/express简介.md" },
         ]
       },
       {

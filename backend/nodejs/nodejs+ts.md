@@ -8,6 +8,16 @@
 $ npm i typescript @types/node ts-node nodemon -D
 ```
 
+使用
+```shell
+ts-node src/index.ts
+```
+
+使用esm
+```shell
+ts-node-esm src/index.ts
+```
+
 #### 1.1.2、配置
 `package.json`
 ```json
