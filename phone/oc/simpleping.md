@@ -1367,7 +1367,7 @@ typedef NS_ENUM(NSInteger, CYPPingStatus) {
 
 ## 使用
 ```js
-self.pingServices = [MZPingServices startPingAddress:@"auction.test.cheyipai.com" callbackHandler:^(MZPingItem *pingItem, NSArray *pingItems) {
+self.pingServices = [MZPingServices startPingAddress:@"www.baidu.com" callbackHandler:^(MZPingItem *pingItem, NSArray *pingItems) {
     if (pingItem.status != MZPingStatusFinished) {
         NSLog(@"111====%@", pingItem.description);            // [weakSelf.textView appendText:pingItem.description];
     } else {
