@@ -22,7 +22,7 @@ const sites = [
         name: '百度AI伙伴',
         icon: 'https://chat.baidu.com/favicon.ico',
         url: 'https://chat.baidu.com/',
-        des: '需要有文心一言的体验资格'
+        des: '已全面开放'
       },
       {
         name: 'New Bing',

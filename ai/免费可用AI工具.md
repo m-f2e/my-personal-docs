@@ -7,6 +7,9 @@
 
 ## 1、免费ChatGPT
 
+### 文心一言（已开放）
+1. https://chat.baidu.com/?sourceType=pc_r_backup
+
 ### ora
 1. https://ora.ai
 2. https://ora.ai/openai/gpt4 (gpt4)

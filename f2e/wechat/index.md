@@ -29,6 +29,25 @@
 }
 ```
 
+#### 3.2.2、button
+##### 3.2.2.1、button传参
+```html
+<button type="default" plain="true" bindtap="bannerBtnClick" data-type="{{item.type}}">查看详情</button>
+
+// 获取参数
+bannerBtnClick:function(e){
+  console.log(e.target.dataset.type)
+},
+```
+##### 3.2.2.2、button-group
+
 
 
 ### 3.3、API
+#### 3.3.1、navigateTo路由跳转
+```html
+wx.navigateTo({
+  url: '/pages/home/activity/activity',
+})
+```
+#### 3.3.2、API
