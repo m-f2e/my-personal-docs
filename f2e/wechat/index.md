@@ -30,7 +30,21 @@
 ```
 
 #### 3.2.2、button
-##### 3.2.2.1、button传参
+
+##### 3.2.2.1、id传参
+:::warning
+id传参只能传基本类型，传对象无法解析
+:::
+```html
+<button type="default" plain="true" bindtap="bannerBtnClick" id="{{item.type}}">查看详情</button>
+
+// 获取参数
+bannerBtnClick:function(e){
+  console.log(e.target.id)
+}
+```
+
+##### 3.2.2.2、data-传参
 ```html
 <button type="default" plain="true" bindtap="bannerBtnClick" data-type="{{item.type}}">查看详情</button>
 
@@ -39,15 +53,37 @@ bannerBtnClick:function(e){
   console.log(e.target.dataset.type)
 },
 ```
-##### 3.2.2.2、button-group
 
-
+##### 3.2.2.3、点击事件
+```html
+<button type="default" plain="true" bindtap="bannerBtnClick">查看详情</button>
 
 ### 3.3、API
-#### 3.3.1、navigateTo路由跳转
+#### 3.3.1、路由跳转
+##### 3.3.1.1、跳转
 ```html
 wx.navigateTo({
   url: '/pages/home/activity/activity',
 })
 ```
+
+##### 3.3.1.2、url传参
+```html
+wx.navigateTo({
+  url: '/pages/home/activity/activity?id=1',
+})
+
+// 页面获取参数
+onLoad:function(options){
+  console.log(options.id)
+}
+```
+
+##### 3.3.1.4、返回
+```html
+wx.navigateBack({
+  delta: 1
+})
+```
+
 #### 3.3.2、API
