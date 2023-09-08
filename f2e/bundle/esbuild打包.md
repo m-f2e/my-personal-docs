@@ -15,8 +15,30 @@
 - 内置支持编译 jsx
 
 ## 2、安装
+```shell
+npm install esbuild -D
+```
 
-## 3、插件
+查看版本
+```shell
+npx esbuild --version
+```
+
+## 3、使用
+### 3.1、命令行
+#### 3.1.1、打包脚本
+```shell
+npx esbuild src/main.js --bundle --outfile=dist/main.js
+```
+#### 3.1.2、实时监听变化
+```shell
+npx esbuild src/main.js --bundle --outfile=dist/main.js --watch
+```
+
+#### 3.1.3、压缩
+```shell
+npx esbuild src/main.js --bundle --outfile=dist/main.js --minify
+```
 
 ## 4、示例
 ### 4.1、esbuild + swc 构建ts项目

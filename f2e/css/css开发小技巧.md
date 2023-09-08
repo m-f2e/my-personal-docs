@@ -568,3 +568,13 @@ https://vue-clamp.vercel.app/?lang=zh
 }
 </style>
 
+
+## 4、绝对居中
+```css
+.center-button {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+```
