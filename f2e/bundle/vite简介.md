@@ -39,3 +39,37 @@ export default defineConfig({
   }
 })
 ```
+
+### vite node脚本打包
+:::tip
+当前最新版本使用`js`编写脚本，使用`ts`编写脚本编译成js时会报错
+:::
+
+index.js
+
+```js
+const { build } = require('vite')
+const path = require('path')
+
+const buildRun = async () => {
+  await build({
+    build: {
+      rollupOptions: {
+        external: ['vue', 'esbuild'],
+      },
+      lib: {
+        entry: path.resolve(__dirname, './main.ts'),
+        name: 'index',
+        fileName: 'index',
+        formats: ['es', 'umd']
+      }
+    }
+  })
+}
+
+buildRun()
+```
+
+```shell
+node index.js
+```
