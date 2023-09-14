@@ -178,6 +178,13 @@ export const sidebarZh = {
         { text: '3、Vite-Plugin-Mock简介', link: '/f2e/bundle/vite-plugin-mock.md' },
         { text: '4、Vite-Plugin-Mini-I18n简介', link: '/f2e/bundle/vite-plugin-mini-i18n.md' },
       ]
+    },
+    {
+      text: 'Vitest测试框架',
+      collapsed: false,
+      items: [
+        { text: '1、Vitest简介', link: '/f2e/bundle/vitest简介.md' },
+      ]
     }
   ],
   '/f2e/css/': [

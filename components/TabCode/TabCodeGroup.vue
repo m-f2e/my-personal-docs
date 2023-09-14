@@ -4,7 +4,7 @@
       <div class="code-tab-item" :class="{ active: modelValue === item.name }" v-for="(item, index) in items" :key="index" @click="tabCodeChange(item)">{{ item.title }}</div>
     </div>
     <template v-for="(item, index) in slots.default?.()" :key="index">
-      <component v-if="modelValue === item.props.name" :is="item" />
+      <component v-if="modelValue === item.props?.name" :is="item" />
     </template>
   </div>
 </template>
@@ -19,12 +19,17 @@ defineProps({
   }
 })
 
+interface IItemType {
+  title: string
+  name: string
+}
+
 const emit = defineEmits(['update:modelValue'])
 const slots = useSlots()
-const items = reactive([])
+const items: IItemType[] = reactive([])
 
 slots.default?.().map((item) => {
-  items.push({ title: item.props.title, name: item.props.name })
+  items.push({ title: item.props?.title, name: item.props?.name })
 })
 
 const tabCodeChange = (item) => {
@@ -50,6 +55,7 @@ export default defineComponent({
     .code-tab-item {
       margin: 6px 0;
       padding: 6px 12px;
+      cursor: pointer;
     }
     .active {
       font-weight: 600;
