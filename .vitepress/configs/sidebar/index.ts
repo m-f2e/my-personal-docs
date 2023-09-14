@@ -224,7 +224,8 @@ export const sidebarZh = {
       items: [
         { text: '1、TypeScript简介', link: '/f2e/script/ts/index.md' },
         { text: '2、Typescript订阅监听', link: '/f2e/script/ts/typescript订阅监听.md' },
-        { text: '3、Typescript进阶', link: '/f2e/script/ts/typescript进阶.md' }
+        { text: '3、Typescript进阶', link: '/f2e/script/ts/typescript进阶.md' },
+        { text: '4、Typescript实用开发技巧', link: '/f2e/script/ts/开发实用技巧.md' }
       ]
     }
   ],
