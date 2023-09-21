@@ -91,6 +91,12 @@ export const navZh = [
         items: [
           { text: "Gitee", link: "https://gitee.com/geeksdidi" }
         ]
+      },
+      {
+        text: "Rust", 
+        items: [
+          { text: "Rust", link: "/backend/rust/rust简介.md" }
+        ]
       }
     ]
   },
