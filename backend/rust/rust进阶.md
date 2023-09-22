@@ -433,6 +433,54 @@ pub fn my_struct(input: TokenStream) -> TokenStream {
 }
 ```
 
+#### 6.3.4、自定义宏
+lib.rs
+```js
+extern crate proc_macro;
+
+use proc_macro::TokenStream;
+use quote::quote;
+use syn;
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+    // rust转字符串
+    let ast = syn::parse(input).unwrap();
+    impl_hello_macro(&ast)
+}
+
+fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let gen = quote! {
+        trait HelloMacro {
+            fn hello_macro();
+        }
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("Hello, Macro! My name is {}", stringify!(#name));
+            }
+        }
+        impl #name {
+            fn hello_macro2() {
+                println!("Hello, Macro! My name is {}", stringify!(#name));
+            }
+        }
+    };
+    gen.into()
+}
+```
+main.rs
+```js
+use packages::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Post{}
+    
+fn main() {
+    Post::hello_macro2();
+}
+```
+
 ### 6.4、文档
 #### 6.4.1、文档格式
 ```js
