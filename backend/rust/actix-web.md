@@ -1,15 +1,15 @@
-# Rust Web框架
-## 1、actix-web
-### 1.1、官网
+# actix-web简介
+## 1.1、官网
 https://actix.rs
 
-### 1.2、安装
+## 1.2、安装
 `Cargo.toml`
 ```js
 [dependencies]
 actix-web = "4"
 ```
-### 1.3、简单示例
+
+## 1.3、简单示例
 ```js
 use std::io;
 
@@ -71,5 +71,3 @@ async fn main() -> io::Result<()> {
     .await
 }
 ```
-
-## 2、axum
