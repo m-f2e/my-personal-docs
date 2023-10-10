@@ -1,6 +1,8 @@
 # bracket-lib
 ## 1、官网
-https://bfnightly.bracketproductions.com/rustbook
+官网地址：https://bfnightly.bracketproductions.com/rustbook
+
+官网示例：https://bfnightly.bracketproductions.com/bracket-lib/what_is_it.html
 
 ## 2、安装
 `Cargo.toml`
@@ -10,7 +12,8 @@ bracket-lib = "~0.8"
 ```
 
 ## 3、基本使用
-### 3.1、创建一个画布
+### 3.1、prelude
+#### 3.1.1、创建一个画布
 ```js
 use bracket_lib::prelude::*;
 
@@ -31,10 +34,139 @@ fn main() -> BError {
 }
 ```
 
-### 3.2、
+#### 3.1.2、监听键盘事件
+```js
+use bracket_lib::prelude::*;
 
-## 4、示例
-### 4.1、飞行的龙
+struct State {}
+
+impl GameState for State {
+  fn tick(&mut self, ctx: &mut BTerm) {
+      match ctx.key {
+        Some(key) => println!("keycode: {:?}", key),
+        _ => {},
+      }
+  }
+}
+
+fn main() -> BError {
+    let context = BTermBuilder::simple80x50().with_title("title").build()?;
+    main_loop(context, State{})
+}
+```  
+
+#### 3.1.3、自定义窗口大小
+```js
+let context = BTermBuilder::vga(100, 50).with_title("title").build()?;
+```
+
+#### 3.1.4、画盒子
+```js
+ctx.draw_box(39, 0, 20, 3, RGB::named(WHITE), RGB::named(BLACK));
+ctx.printer(
+    58,
+    1,
+    &format!("#[pink]FPS: #[]{}", ctx.fps),
+    TextAlign::Right,
+    None,
+);
+ctx.printer(
+    58,
+    2,
+    &format!("#[pink]Frame Time: #[]{} ms", ctx.frame_time_ms),
+    TextAlign::Right,
+    None,
+);
+```
+
+### 3.2、random模块
+#### 3.2.1、RandomNumberGenerator生成随机数
+:::tip
+RandomNumberGenerator::new()使用的是随机种子
+:::
+```js
+use bracket_lib::random::RandomNumberGenerator;
+
+fn main() {
+    let mut random = RandomNumberGenerator::new();
+    println!("Hello, world!=={}", random.range(0, 10));
+}
+```
+
+#### 3.2.2、指定类型的随机数
+```js
+use bracket_lib::random::RandomNumberGenerator;
+
+fn main() {
+    let mut random = RandomNumberGenerator::new();
+    let res:f32 = random.rand();
+    println!("Hello, world!=={}", res);
+}
+```
+
+### 3.3、color
+#### 3.3.1、lerp文字颜色渐变
+```js
+let col1 = RGB::named(CYAN);
+let col2 = RGB::named(YELLOW);
+let percent = self.y as f32 / 50.0;
+let fg = col1.lerp(col2, percent);
+
+ctx.print_color(
+    1, 
+    self.y, 
+    fg, 
+    RGB::named(BLACK), 
+    "♫ ♪ Hello Bracket World ☺",
+);
+```
+
+```js
+impl GameState for State {
+  fn tick(&mut self, ctx: &mut BTerm) {
+      let red = RGB::named(RED);
+      let blue = RGB::named(YELLOW);
+      for i in 1..80 {
+          let percent = i as f32 / 80.0;
+          let color = red.lerp(blue, percent);
+          ctx.print_color(
+              1, 
+              i, 
+              color, 
+              RGB::named(BLACK), 
+              "♫ ♪ Hello Bracket World ☺",
+          );
+      }
+  }
+}
+```
+
+#### 3.3.2、lerpit迭代器渐变颜色
+```js
+impl GameState for State {
+  fn tick(&mut self, ctx: &mut BTerm) {
+    let mut i = 0;
+    for color in RgbLerp::new(RGB::named(RED), RGB::named(YELLOW), 20) {
+        ctx.print_color(
+            1, 
+            i, 
+            color, 
+            RGB::named(BLACK), 
+            "♫ ♪ Hello Bracket World ☺",
+        );
+        i += 1;
+    }
+  }
+}
+```
+
+#### 3.3.3、颜色渐变
+```js
+
+```
+
+## 5、示例
+### 5.1、飞行的龙
 ```js
 use bracket_lib::prelude::*;
 
@@ -228,4 +360,4 @@ fn main() -> BError {
     main_loop(context, State::new())
 }
 ```
-### 4.2、 
+### 5.2、 
