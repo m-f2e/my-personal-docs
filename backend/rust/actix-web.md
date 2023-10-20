@@ -1,4 +1,7 @@
 # actix-web简介
+:::tip
+对性能极度敏感的开发者，建议使用actix-web
+:::
 ## 1.1、官网
 https://actix.rs
 

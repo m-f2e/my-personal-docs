@@ -299,6 +299,7 @@ export const sidebarZh = {
         { text: '2、Rust进阶', link: '/backend/rust/rust进阶.md' },
         { text: '3、Rust开发案例', link: '/backend/rust/开发案例.md' },
         { text: '4、Rust实用工具', link: '/backend/rust/实用工具.md' },
+        { text: '5、常用三方库', link: '/backend/rust/常用三方库.md' },
       ]
     },
     {
@@ -307,7 +308,10 @@ export const sidebarZh = {
       items: [
         { text: '1、Tauri桌面端应用', link: '/backend/rust/tauri桌面端应用.md' },
         { text: '2、web框架actix-web', link: '/backend/rust/actix-web.md' },
-        { text: '3、游戏框架bracket-lib', link: '/backend/rust/bracket-lib.md' },
+        { text: '3、web框架rocket', link: '/backend/rust/web框架rocket.md' },
+        { text: '4、web框架warp.md', link: '/backend/rust/web框架warp.md' },
+        { text: '5、游戏框架bracket-lib', link: '/backend/rust/bracket-lib.md' },
+        { text: '6、wasm框架', link: '/backend/rust/webAssembly简介.md' },
       ]
     }
   ],

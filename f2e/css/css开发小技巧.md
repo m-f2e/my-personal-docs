@@ -578,3 +578,38 @@ https://vue-clamp.vercel.app/?lang=zh
   transform: translate(-50%, -50%);
 }
 ```
+
+## 5、图片
+### 5.1、base64转文件
+```js
+base64ToFile(base64Data, filename = 'file') {
+  const arr = base64Data.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const suffix = mime.split('/')[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  // eslint-disable-next-line no-plusplus
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], `${filename}.${suffix}`, {
+    type: mime,
+  });
+}
+```
+### 5.2、base64转blob
+```js
+  dataURLToBlob(dataurl) {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    // eslint-disable-next-line no-plusplus
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  }
+```

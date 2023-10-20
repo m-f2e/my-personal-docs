@@ -580,3 +580,26 @@ cargo run -p add-one
 add-two = { path = "../add-one" }
 ```
 
+
+
+## 7、Mutex
+### 7.1、Arc与Mutex
+```js
+let counter = Arc::new(Mutex::new(0));
+let mut handlers = vec![];
+for _ in 0..10 {
+  let counter = Arc::clone(&counter);
+  let handler = thread::spawn(move || {
+    let mut num = counter.lock().unwrap();
+    *num += 1;
+  });
+  handlers.push(handler);
+}
+
+for handler in handlers {
+  handler.join().unwrap();
+}
+
+let res = counter.lock().unwrap();
+println!("Result:{}", res);
+```
