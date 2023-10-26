@@ -603,3 +603,248 @@ for handler in handlers {
 let res = counter.lock().unwrap();
 println!("Result:{}", res);
 ```
+### 7.2、多线程共享Mutex
+```js
+let counter = Arc::new(Mutex::new(0));
+let mut handlers = vec![];
+for _ in 0..10 {
+  let counter = Arc::clone(&counter);
+  let handler = thread::spawn(move || {
+    let mut num = counter.lock().unwrap();
+    *num += 1;
+  });
+  handlers.push(handler);
+}
+
+for handler in handlers {
+  handler.join().unwrap();
+}
+
+let res = counter.lock().unwrap();
+println!("Result:{}", res);
+```
+
+## 8、自定义Error
+### 8.1、自定义错误
+```js
+use std::error::Error;
+
+#[derive(Debug)]
+struct ErrorA {
+  err: ErrorB,
+}
+
+impl std::fmt::Display for ErrorA {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "ErrorA")
+  }
+}
+
+impl std::error::Error for ErrorA {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        Some(&self.err)
+    }
+}
+    
+fn error_a() -> Result<(), ErrorA> {
+    Err(ErrorA {
+        err: ErrorB
+    })
+}
+
+#[derive(Debug)]
+struct ErrorB;
+
+impl std::fmt::Display for ErrorB {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "ErrorB")
+  }
+}
+
+impl std::error::Error for ErrorB {}
+    
+fn main() -> Result<(), Box<dyn std::error::Error>>{
+    match error_a() {
+        Err(e) => {
+            println!("{:?}", e);
+            println!("{:?}", e.source());
+        },
+        _ => {}
+    }
+    Ok(())
+}
+```
+
+### 8.2、错误转换
+```js
+use std::error::Error;
+
+#[derive(Debug)]
+struct ErrorA;
+
+impl std::fmt::Display for ErrorA {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "ErrorA")
+  }
+}
+
+impl std::error::Error for ErrorA {}
+    
+fn error_a() -> Result<(), ErrorA> {
+    Err(ErrorA)
+}
+
+#[derive(Debug)]
+struct ErrorB;
+
+impl std::fmt::Display for ErrorB {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "ErrorB")
+  }
+}
+
+impl std::error::Error for ErrorB {}
+
+
+// 为错误B实现错误A
+impl From<ErrorA> for ErrorB {
+    fn from(_: ErrorA) -> Self {
+        ErrorB
+    }
+}
+    
+fn main() -> Result<(), ErrorB>{
+    println!("{:#?}", ErrorB::from(ErrorA));
+    error_a()?;
+    Ok(())
+}
+```
+
+## 9、类型转换
+### 9.1、from into
+```js
+enum Status {
+    Working,
+    Vacation,
+    Absenteesim(i32)
+}
+
+impl From<i32> for Status {
+    fn from(i: i32) -> Self {
+        match i {
+            0 => Status::Working,
+            1..=3 => Status::Vacation,
+            _ => Status::Absenteesim(i)
+        }
+    }
+}
+
+// 发工资
+fn pay(mis_day: i32) -> i32 {
+    let status = Status::from(mis_day);
+    match status {
+        Status::Working => 1000,
+        Status::Vacation => 1000,
+        Status::Absenteesim(_) => {
+            let pays = 1000 - mis_day * 300;
+            if pays < 0 {
+                0
+            } else {
+                pays
+            }
+        },
+    }
+}
+
+fn main() {
+    println!("{}", pay(0));
+    println!("{}", pay(3));
+    println!("{}", pay(5));
+}
+```
+### 9.2、try_from try_into
+```js
+enum Status {
+    Working,
+    Vacation,
+    Absenteesim(i32)
+}
+
+impl TryFrom<i32> for Status {
+    type Error = ();
+    
+    fn try_from(i: i32) -> Result<Self, Self::Error> {
+        match i {
+            0 => Ok(Status::Working),
+            1..=3 => Ok(Status::Vacation),
+            _ => Ok(Status::Absenteesim(i))
+        }
+    }
+    
+}
+
+// 发工资
+fn pay(mis_day: i32) -> i32 {
+    let status = Status::try_from(mis_day);
+    match status {
+        Ok(Status::Working) => 1000,
+        Ok(Status::Vacation) => 1000,
+        Ok(Status::Absenteesim(day)) => {
+          let pays = 1000 - day * 300;
+          if pays < 0 {
+              0
+          } else {
+              pays
+          }
+        },
+        _ => 0
+    }
+}
+
+fn main() {
+    println!("{}", pay(0));
+    println!("{}", pay(3));
+    println!("{}", pay(5));
+}
+```
+
+是否为0判断
+```js
+#[derive(Debug)]
+struct Zero(u32);
+
+#[derive(Debug)]
+enum IsZero {
+  Zero
+}
+
+
+impl TryFrom<u32> for Zero {
+    type Error = IsZero;
+
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        if value == 0 {
+            Err(IsZero::Zero)
+        } else {
+            Ok(Zero(value))
+        }
+    }
+    
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let zero = Zero::try_from(0_u32);
+    match zero {
+        Ok(zero) => println!("1--{}", zero.0),
+        Err(IsZero::Zero) => println!("1--zero"),
+    }
+
+    let some_type: Result<Zero, IsZero> = 0_u32.try_into();
+    match some_type {
+        Ok(zero) => println!("2--{}", zero.0),
+        Err(IsZero::Zero) => println!("2--zero"),
+    }
+
+    Ok(())
+}
+```

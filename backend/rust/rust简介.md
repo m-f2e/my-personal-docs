@@ -146,6 +146,12 @@ use ferris_says::say;
 print!("------");
 // 换行打印
 println!("------");
+
+// 多行字符串
+println!("a is {0}, b is {1}", 12, 13);
+
+let str = r#"{"key":"value"}"#;
+println!("str: {}", str);
 ```
 打印变量
 ```js
@@ -1265,6 +1271,119 @@ fs::read_to_string("path.txt").unwrap_or_default();
 :::
 ```js
 fs::read_to_string("path.txt").unwrap_or_else(|_| String::from("default"));
+```
+### 4.24、File
+#### 4.24.1、Create
+:::tip
+std::fs::File::create()只读模式打开文件
+- 文件存在清空
+- 文件不存在创建
+- 返回一个文件句柄
+- std::fs::OpenOptions可设置读写模式
+:::
+```js
+use std::{fs::File, io::Write};
+
+fn main() -> std::io::Result<()> {
+  let mut file = File::create("red.txt")?;
+  file.write_all(b"hello")?;
+  // writeln!(&mut file, "This is a red text")?;  
+  Ok(())
+}
+```
+
+```js
+use std::{fs, io::Write};
+
+fn main() -> std::io::Result<()> {
+    let mut file = fs::OpenOptions::new()
+        .append(true)
+        .create(true)
+        .open("red.txt")?;
+    file.write("buf\n".as_bytes())?;
+
+    Ok(())
+}
+```
+
+#### 4.24.2、Open
+:::tip
+std::fs::File::open()只读模式打开一个已存在的文件
+- 文件存在打开
+- 文件不存在抛出错误
+- 返回一个文件句柄
+:::
+
+```js
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let file = File::open("red.txt")?;
+    // 打印文件内容长度
+    println!("file: {}", file.metadata()?.len());
+
+    Ok(())
+}
+```
+
+```js
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let file = fs::OpenOptions::new()
+        .append(true)
+        .open("red.txt")?;
+    // 打印文件内容长度
+    println!("file: {}", file.metadata()?.len());
+
+    Ok(())
+}
+```
+
+#### 4.24.3、Read
+以vec形式返回
+```js
+use std::{fs::File, io::Read};
+
+fn main() -> std::io::Result<()> {
+    let mut file = File::open("red.txt")?;
+    let mut data = Vec::new();
+    file.read_to_end(&mut data)?;
+    // 打印内容
+    println!("data: {}", String::from_utf8_lossy(&data));
+
+    Ok(())
+}
+```
+
+以字符串形式返回
+```js
+use std::{fs::File, io::Read};
+
+fn main() -> std::io::Result<()> {
+    let mut file = File::open("red.txt")?;
+    let mut buf = String::new();
+    file.read_to_string(&mut buf)?;
+    println!("buf: {}", buf);
+
+    Ok(())
+}
+```
+
+按行读取
+```js
+use std::{fs::File, io::{BufReader, BufRead}};
+
+fn main() -> std::io::Result<()> {
+    let file = File::open("red.txt")?;
+
+    let reader = BufReader::new(file);
+    for (index, line) in reader.lines().enumerate() {
+        println!("{} {}", index+1, line?);
+    }
+
+    Ok(())
+}
 ```
 
 ## 5、示例
