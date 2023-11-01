@@ -300,6 +300,7 @@ export const sidebarZh = {
         { text: '3、Rust开发案例', link: '/backend/rust/开发案例.md' },
         { text: '4、Rust实用工具', link: '/backend/rust/实用工具.md' },
         { text: '5、常用三方库', link: '/backend/rust/常用三方库.md' },
+        { text: '6、开发技巧及注意事项', link: '/backend/rust/开发技巧及注意事项.md' },
       ]
     },
     {
