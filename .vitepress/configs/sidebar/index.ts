@@ -310,9 +310,11 @@ export const sidebarZh = {
         { text: '1、Tauri桌面端应用', link: '/backend/rust/tauri桌面端应用.md' },
         { text: '2、web框架actix-web', link: '/backend/rust/actix-web.md' },
         { text: '3、web框架rocket', link: '/backend/rust/web框架rocket.md' },
-        { text: '4、web框架warp.md', link: '/backend/rust/web框架warp.md' },
-        { text: '5、游戏框架bracket-lib', link: '/backend/rust/bracket-lib.md' },
-        { text: '6、wasm框架', link: '/backend/rust/webAssembly简介.md' },
+        { text: '4、web框架warp', link: '/backend/rust/web框架warp.md' },
+        { text: '5、web框架axum', link: '/backend/rust/web框架axum.md' },
+        { text: '6、跨平台框架Dioxus', link: '/backend/rust/跨平台框架Dioxus.md' },
+        { text: '7、游戏框架bracket-lib', link: '/backend/rust/bracket-lib.md' },
+        { text: '8、wasm框架', link: '/backend/rust/webAssembly简介.md' },
       ]
     }
   ],
