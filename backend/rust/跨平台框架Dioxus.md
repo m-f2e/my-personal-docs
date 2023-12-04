@@ -90,6 +90,15 @@ dx serve --hot-reload
 dx serve
 ```
 
+#### 3.3、指定平台特性
+```bash
+dx serve --hot-reload --platform=web --no-default-features --features=web
+```
+
+#### 3.4、构建项目
+```bash
+```
+
 ### 4、dioxus模版语法
 #### 4.1、cx.render render! rsx! 渲染模板
 ```js
