@@ -1231,7 +1231,33 @@ fn main() {
     println!("{}", received);
 }
 ```
+#### 4.21.5、本地线程变量
+```js
+use std::{cell::RefCell, thread};
+fn main() {
+    thread_local! {
+        static FOO: RefCell<u32> = RefCell::new(1);
+    }
+    FOO.with(|f| {
+        assert_eq!(*f.borrow(), 1);
+        *f.borrow_mut() = 2;
+    });
 
+
+    let t = thread::spawn(|| {
+        FOO.with(|f| {
+            assert_eq!(*f.borrow(), 1);
+            *f.borrow_mut() = 3;
+        })
+    });
+    t.join().unwrap();
+
+    // FOO是一个线程本地变量，多线程中修改不会影响主线程
+    FOO.with(|f| {
+        assert_eq!(*f.borrow(), 2);
+    });
+}
+```
 ### 4.22、闭包
 ```js
 let inc = |num: i32| -> i32 { num + 1 };
