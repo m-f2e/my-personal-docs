@@ -245,6 +245,15 @@ export const sidebarZh = {
       ]
     }
   ],
+  '/f2e/harmonyOS/': [
+    {
+      text: 'HarmonyOS',
+      collapsed: false,
+      items: [
+        { text: '1、鸿蒙OS基础', link: '/f2e/harmonyOS/index.md' },
+      ]
+    },
+  ],
   '/tool/vscode/': [
     {
       text: 'VSCode',

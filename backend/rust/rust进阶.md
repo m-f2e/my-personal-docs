@@ -20,6 +20,12 @@ println!("{:?}", scores);
 // {"blue": 1, "red": 2}
 ```
 
+### 1.3、repeat + collection
+```js
+use std::{cell::RefCell, thread, iter::repeat};
+let res: Vec<i32> = repeat(10).take(100).collect();
+```
+
 ## 2、HashMap
 ### 2.1、定义
 ```js

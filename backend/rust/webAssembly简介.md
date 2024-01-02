@@ -13,7 +13,7 @@ cargo install --locked trunk
 `Cargo.toml`
 ```js
 [dependencies]
-yew = { version = "0.21", features = ["std_web"] }
+yew = "0.21"
 ```
 #### 1.3.1、csr(客户端渲染)
 `Cargo.toml`
@@ -29,8 +29,17 @@ port = 8000
 ```js
 <!DOCTYPE html>
 <html lang="en">
-    <head></head>
-    <body></body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link data-trunk rel="css" href="/tailwind.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="./tailwind.css">
+    <title>URL</title>
+</head>
+<body>
+    
+</body>
 </html>
 ```
 
@@ -397,7 +406,46 @@ fn main() {
 }
 ```
 
-#### 1.3.6、
+#### 1.3.6、引入tailwind
+在项目根目录下新建`tailwind.config.js`,内容如下
+```js
+module.exports = {
+  content: ["./src/**/*.{html,rs}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    // require('@tailwindcss/forms'),
+  ],
+}
+```
+新建`index.css`,内容如下
+```js
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+新建`Trunk.toml`,内容如下
+```js
+[[hooks]]
+stage = "build"
+command = "tailwindcss"
+command_arguments = [
+  "build",
+  "-i", 
+  "index.css", 
+  "-o", 
+  "dist/.stage/tailwind.css"
+]
+
+[build]
+target = "index.html"
+dist = "dist"
+
+[[proxy]]
+rewrite = "/api/"
+backend = "http://0.0.0.0:8000/"
+```
 
 ## 2、wasm-bindgen（Github 5k star）
 ### 2.1、官网
@@ -509,3 +557,82 @@ pub fn run() {
 ```
 
 ## 3、wasm-pack（Github 4.1k star）
+
+## 4、sycamore (Github 2.5k star)
+### 4.1、官网
+https://sycamore-rs.netlify.app
+
+### 4.2、安装
+```shell
+cargo install --locked trunk
+```
+`Cargo.toml`
+```js
+[dependencies]
+sycamore = { version = "0.8", features = ["serde", "futures"] }
+```
+
+### 4.3、使用
+#### 4.3.1、基本使用
+```js
+use sycamore::prelude::*;
+
+fn main() {
+    console_error_panic_hook::set_once();
+    tracing_wasm::set_as_global_default();
+
+    sycamore::render(|ctx|{
+        view! { ctx, 
+            p(class="bg-red-500", id="11") { "Hello, World!" }
+        }
+    })
+}
+```
+
+#### 4.3.2、多个元素
+```js
+sycamore::render(|ctx|{
+    view! { ctx, 
+        p(class="bg-red-500", id="11") { "Hello, World!" }
+        button(on:click=|_| { 
+            info!("button click");
+        }) {
+            "Click me"
+        }
+    }
+})
+```
+
+#### 4.3.3、组件封装
+```js
+use sycamore::prelude::*;
+use tracing::info;
+
+#[component]
+fn MyComponent<G:Html>(ctx: Scope) -> View<G> {
+    view! { ctx,
+        div(class="bg-green-500") {
+            "Value: "          
+        }
+    }
+}
+
+fn main() {
+    console_error_panic_hook::set_once();
+    tracing_wasm::set_as_global_default();
+
+    info!("Hello, World! {}", 11);
+    
+    sycamore::render(|ctx|{
+        view! { ctx, 
+            p(class="bg-red-500", id="11") { "Hello, World!" }
+            button(on:click=|_| { 
+                info!("button click");
+            }) {
+                "Click me"
+            }
+            MyComponent()
+        }
+    })
+}
+```

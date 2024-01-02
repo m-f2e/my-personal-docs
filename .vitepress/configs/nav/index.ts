@@ -57,6 +57,7 @@ export const navZh = [
           { text: "Svelte", link: "/f2e/svelte/" },
           { text: "Solid", link: "/f2e/solid/" },
           { text: "微信小程序", link: "/f2e/wechat/" },
+          { text: "鸿蒙系统", link: "/f2e/harmonyOS/" },
         ]
       },
       {

@@ -139,6 +139,33 @@ use ferris_says::say;
 ```
 
 
+#### 3.3.5、项目配置代理
+在项目根目录创建`.cargo`目录，在其中创建`config.toml`文件
+```js
+.cargo          
+└─ config.toml  
+├─ src
+└─ target
+```
+`config.toml`内容如下
+```js
+[source.crates-io]
+# replace-with = 'ustc'
+replace-with = 'rsproxy'
+
+[source.ustc]
+registry = "https://mirrors.ustc.edu.cn/crates.io-index"
+[registries.ustc]
+registry = "https://github.com/rust-lang/crates.io-index"
+
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+
+[net]
+git-fetch-with-cli = true
+```
 ## 4、基础
 ### 4.1、println打印
 ```js
