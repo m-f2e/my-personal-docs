@@ -603,3 +603,105 @@ struct CustomDialog1 {
   }
 }
 ```
+
+## 5、实用开发案例
+### 5.1、实现单例
+```js
+export class GlobalContext {
+  private constructor() { }
+  private static instance: GlobalContext;
+  private _objects = new Map<string, Object>();
+
+  public static getContext(): GlobalContext {
+    if (!GlobalContext.instance) {
+      GlobalContext.instance = new GlobalContext();
+    }
+    return GlobalContext.instance;
+  }
+
+  getObject(value: string): Object | undefined {
+    return this._objects.get(value);
+  }
+
+  setObject(key: string, objectClass: Object): void {
+    this._objects.set(key, objectClass);
+  }
+}
+```
+使用
+```js
+import { GlobalContext } from '../common/utils/GlobalContext';
+
+export default class EntryAbility extends Ability {
+  onCreate(want: Want) {
+    GlobalContext.getContext().setObject('abilityWant', want);
+  }
+
+  async onWindowStageCreate(windowStage: window.WindowStage) {
+    GlobalContext.getContext().setObject('display', await display.getDefaultDisplaySync());
+    windowStage.loadContent('pages/TabIndex');
+  }
+};
+```
+### 5.2、实现屏幕适配
+```js
+import display from '@ohos.display';
+import { GlobalContext } from './GlobalContext';
+import FileManagerIndex from '../../pages/FileManagerIndex';
+
+
+let context = getContext(this);
+const DESIGN_WIDTH = 360;
+const DESIGN_HEIGHT = 780;
+
+/**
+ * Fits tools with different sizes and lengths
+ */
+export default class DimensionUtil {
+  static adaptDimension(value: number): number {
+    let deviceDisplay: display.Display = GlobalContext.getContext().getObject('display') as display.Display;
+    let widthScale = deviceDisplay.width / DESIGN_WIDTH;
+    let virtualHeight = widthScale * DESIGN_HEIGHT;
+    let designDim = Math.sqrt(DESIGN_WIDTH * DESIGN_WIDTH + DESIGN_HEIGHT * DESIGN_HEIGHT);
+    let virtualDim = Math.sqrt(deviceDisplay.width * deviceDisplay.width + virtualHeight * virtualHeight);
+    return virtualDim * value / designDim;
+  }
+
+  /**
+   * Obtains the screen horizontal adaptation px.
+   */
+  static getPx(value: Resource): number {
+    let beforeVp = context.resourceManager.getNumber(value.id);
+    return DimensionUtil.adaptDimension(beforeVp);
+  }
+
+  /**
+   * Obtains the screen horizontal adaptation vp.
+   */
+  static getVp(value: Resource): number {
+    let beforeVp = context.resourceManager.getNumber(value.id);
+    return px2vp(DimensionUtil.adaptDimension(beforeVp));
+  }
+
+  /**
+   * Obtains the screen horizontal adaptation fp.
+   */
+  static getFp(value: Resource): number {
+    let beforeFp = context.resourceManager.getNumber(value.id);
+    return px2fp(DimensionUtil.adaptDimension(beforeFp));
+  }
+}
+```
+
+### 5.3、获取屏幕宽高
+```js
+window.getLastWindow(context)
+  .then((windowClass: window.Window) => {
+    let windowProperties = windowClass.getWindowProperties();
+    this.screenWidth = px2vp(windowProperties.windowRect.width);
+    this.screenHeight = px2vp(windowProperties.windowRect.height);
+  })
+  .catch((error: Error) => {
+    Logger.error('Failed to obtain the window size. Cause: ' + JSON.stringify(error));
+  })
+```

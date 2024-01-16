@@ -636,3 +636,67 @@ fn main() {
     })
 }
 ```
+
+## 5、trunk(wasm捆绑工具)
+:::tip
+Trunk是一个用于Rust的WASM web应用程序捆绑程序。Trunk使用一个简单的optional-config模式，通过源HTML文件构建和绑定WASM、JS片段和其他资产（图像、css、SCS）。
+
+📦 Dev server-Trunk附带一个built-in服务器，用于快速开发工作流，并支持HTTP和WebSocket代理。
+
+🏗 更改检测-Trunk监视应用程序的更改并为您生成触发器。浏览器重新加载、HMR和其他相关功能是in-progress。
+:::
+### 5.1、官网
+https://trunkrs.dev
+
+### 5.2、安装
+```shell
+cargo install trunk
+或者
+cargo install trunk --locked
+```
+
+### 5.3、使用
+####  5.3.1、基本使用
+```js
+trunk serve
+或者
+trunk serve --open
+或者
+trunk serve --open --config ./trunk.toml
+```
+
+#### 5.3.2、配置
+```js
+[[hooks]]
+stage = "build"
+command = "tailwindcss" // yarn
+command_arguments = [
+  "build",
+  "-i", 
+  "index.css", 
+  "-o", 
+  "dist/.stage/tailwind.css"
+]
+
+[build]
+target = "index.html"
+dist = "dist"
+```
+
+#### 5.3.3、打包
+```js
+trunk build --release
+```
+
+#### 5.3.4、代理
+```js
+[[proxy]]
+rewrite = "/api/"
+backend = "http://0.0.0.0:8000/"
+```
+
+#### 5.3.5、css&scss
+`index.html`
+```js
+<link rel="stylesheet" href="dist/.stage/tailwind.css">
+```

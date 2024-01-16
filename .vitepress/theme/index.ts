@@ -1,5 +1,5 @@
 import DefaultTheme from 'vitepress/theme'
-import TargetBlank from '../../components/TargetBlank.vue'
+import MTargetBlank from '../../components/MTargetBlank.vue'
 import Button from '../../components/Button.vue'
 import Toast from '../../components/Toast.vue'
 import TsxContainer from '../../components/tsxContainer'
@@ -9,7 +9,7 @@ import TabCodeItem from '../../components/TabCode/TabCodeItem.vue'
 
 // 组件注册
 const components = [
-  TargetBlank,
+  MTargetBlank,
   Button,
   Toast,
   TsxContainer,
