@@ -43,7 +43,7 @@ scores.insert(String::from("Blue"), 10);
 scores.entry(String::from("Yellow")).or_insert(50);
 ```
 
-### 2.3、动态创建
+### 2.3、or_insert(默认填充)
 ```js
 let text = "hello world from rust";
 let mut map = HashMap::new();
@@ -52,6 +52,16 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 println!("map: {:?}", map);
+
+
+// 统计字符
+let text = "hello world from rust";
+  let mut map = HashMap::new();
+  for word in text.chars() {
+      let count = map.entry(word).or_insert(0);
+      *count += 1;
+  }
+  println!("map: {:?}", map);
 ```
 
 ## 3、测试
@@ -487,8 +497,8 @@ fn main() {
 }
 ```
 
-### 6.4、文档
-#### 6.4.1、文档格式
+## 7、文档
+### 7.1、文档格式
 ```js
 //! # my doc
 //! 
@@ -512,7 +522,7 @@ pub fn add(x: i32) -> i32 {
 }
 ```
 
-#### 6.4.2、展开导出
+### 7.2、展开导出
 ```js
 // 展开导出
 pub use self::Kinds::{PrimaryColor, SecondaryColor};
@@ -534,18 +544,18 @@ pub mod Kinds {
 }
 ```
 
-#### 6.4.3、文档预览
+### 7.3、文档预览
 ```shell
 cargo doc --open
 ```
 
-#### 6.4.4、文档生成
+### 7.4、文档生成
 ```shell
 cargo doc
 ```
 
-### 6.5、工作区间
-#### 6.5.1、工作区间配置
+## 8、工作区间
+### 8.1、工作区间配置
 目录结构
 ```js
 |-workspace
@@ -579,7 +589,7 @@ cargo build -p add-one
 cargo run -p add-one
 ```
 
-#### 6.5.2、工作区间引用
+### 8.2、工作区间引用
 `add-one`下的`Cargo.toml`
 ```js
 [dependecies]
@@ -588,8 +598,8 @@ add-two = { path = "../add-one" }
 
 
 
-## 7、Mutex
-### 7.1、Arc与Mutex
+## 9、Mutex
+### 9.1、Arc与Mutex
 ```js
 let counter = Arc::new(Mutex::new(0));
 let mut handlers = vec![];
@@ -609,7 +619,7 @@ for handler in handlers {
 let res = counter.lock().unwrap();
 println!("Result:{}", res);
 ```
-### 7.2、多线程共享Mutex
+### 9.2、多线程共享Mutex
 ```js
 let counter = Arc::new(Mutex::new(0));
 let mut handlers = vec![];
@@ -630,8 +640,8 @@ let res = counter.lock().unwrap();
 println!("Result:{}", res);
 ```
 
-## 8、自定义Error
-### 8.1、自定义错误
+## 10、自定义Error
+### 10.1、自定义错误
 ```js
 use std::error::Error;
 
@@ -681,7 +691,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
 }
 ```
 
-### 8.2、错误转换
+### 10.2、错误转换
 ```js
 use std::error::Error;
 
@@ -726,8 +736,8 @@ fn main() -> Result<(), ErrorB>{
 }
 ```
 
-## 9、类型转换
-### 9.1、from into
+## 11、类型转换
+### 11.1、from into
 ```js
 enum Status {
     Working,
@@ -768,7 +778,7 @@ fn main() {
     println!("{}", pay(5));
 }
 ```
-### 9.2、try_from try_into
+### 11.2、try_from try_into
 ```js
 enum Status {
     Working,
