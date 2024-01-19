@@ -261,7 +261,8 @@ export const sidebarZh = {
       items: [
         { text: '1、VSCode简介', link: '/tool/vscode/index.md' },
         { text: '2、常用扩展插件', link: '/tool/vscode/常用扩展插件.md' },
-        { text: '3、devContainer容器', link: '/tool/vscode/devContainer容器.md' }
+        { text: '3、devContainer容器', link: '/tool/vscode/devContainer容器.md' },
+        { text: '4、VSCode插件开发', link: '/tool/vscode/vscode插件开发.md' }
       ]   
     }
   ],
