@@ -144,7 +144,8 @@ yo code
 官网示例：https://github.dev/Microsoft/vscode-extension-samples/tree/main/tree-view-sample
 
 ### 3.1、VSCode内置icon使用
-icon地址: https://www.figma.com/community/file/768673354734944365/visual-studio-code-icons
+icon地址：https://microsoft.github.io/vscode-codicons/dist/codicon.html
+figma地址: https://www.figma.com/community/file/768673354734944365/visual-studio-code-icons
 
 配置文件使用`package.json`
 ```js
@@ -385,6 +386,69 @@ await vscode.commands.executeCommand('workbench.action.openSettings');
 
 ### 3.11、TreeView
 示例地址：https://github.dev/Microsoft/vscode-extension-samples/tree/main/tree-view-sample
+
+`treeProvider.ts`
+```js
+import * as vscode from 'vscode';
+import * as path from 'path';
+
+class User {
+  constructor(
+    public readonly id: number,
+    public readonly name: string,
+    public readonly github: string,
+  ) {}
+}
+
+class Topic {
+  constructor(
+    public readonly id: number,
+    public readonly title: string,
+    public readonly userId: number,
+  ) {}
+}
+
+export class TreeProvider implements vscode.TreeDataProvider<User | Topic> {
+  getTreeItem(element: User | Topic): vscode.TreeItem | Thenable<vscode.TreeItem> {
+    if (element instanceof User) {
+      const treeItem = new vscode.TreeItem(element.name, vscode.TreeItemCollapsibleState.Collapsed);
+      treeItem.iconPath = new vscode.ThemeIcon('account');
+      return treeItem;
+    }
+    const treeItem = new vscode.TreeItem(element.title);
+    treeItem.iconPath = new vscode.ThemeIcon('file');
+    return treeItem;
+  }
+
+  getChildren(element?: User | Topic | undefined): vscode.ProviderResult<(User | Topic)[]> {
+    if (!element) {
+      const users: User[] = require(path.join(__dirname, '..', 'resource', 'user.json'));
+      return users.map((t) => new User(t.id, t.name, t.github));
+    }
+    const userId = element.id;
+    const topics: Topic[] = require(path.join(__dirname, '..', 'resource', 'topic.json'));
+    return topics.filter((t) => t.userId === userId).map((t) => new Topic(t.id, t.title, t.userId));
+  }
+}
+```
+
+`package.json`
+```json
+ "views": {
+  "explorer": [
+    {
+      "id": "treeDemo",
+      "name": "Tree Demo"
+    }
+  ]
+},
+```
+
+`extension.ts`
+```js
+const treeProvider = vscode.window.registerTreeDataProvider('treeDemo', new TreeProvider());
+context.subscriptions.push(treeProvider);
+```
 
 ### 3.12、读取configuration配置
 ```js
