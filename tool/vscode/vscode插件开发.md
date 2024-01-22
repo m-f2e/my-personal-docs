@@ -476,6 +476,27 @@ panel.webview.onDidReceiveMessage(message => {
 }, undefined, context.subscriptions);
 ```
 
+### 3.14、Terminal(终端)
+```js
+const terminals = <vscode.Terminal[]>(<any>vscode.window).terminals;
+const terminal = terminals.find(t => t.name === "my-tools");
+if (terminal) {
+  terminal.show();
+  terminal.sendText(command);
+} else {
+  vscode.window.createTerminal({ name: "my-tools", location:vscode.TerminalLocation.Editor }).sendText(command);
+};
+```
+
+### 3.15、文件对比
+```js
+const diff = vscode.window.diff(
+  path.join(__dirname, '..', 'resource', 'file1.txt'),
+  path.join(__dirname, '..', 'resource', 'file2.txt'),
+  'title'
+);
+```
+
 ## 4、打包
 官网构建文档：
 [publishing-extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
